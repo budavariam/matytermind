@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node backend/index.js",
     "test": "mocha 'backend/spec/**/*.js'",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd frontend && npm install && npm run build && rm -rf ./node_modules"
   },
   "dependencies": {
     "ejs": "^2.5.6",
