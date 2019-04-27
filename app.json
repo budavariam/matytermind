@@ -1,6 +1,6 @@
 {
   "name": "Game",
-  "description": "A basic implementation of a classic game",
+  "description": "A basic implementation of a logic game",
   "repository": "https://github.com/heroku/node-js-getting-started",
   "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
   "keywords": ["node", "express", "heroku"],

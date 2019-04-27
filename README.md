@@ -1,4 +1,4 @@
-# Mastermind backend
+# Logic game
 
 ## Deploying to Heroku
 

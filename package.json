@@ -5,9 +5,9 @@
   "engines": {
     "node": "10.x"
   },
-  "main": "index.js",
+  "main": "backend/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node backend/index.js",
     "test": "mocha './spec/**/*.js'"
   },
   "dependencies": {
