@@ -7,13 +7,33 @@
     padding: 20px;
 }
 
+.hugepin.actual {
+    border-color: yellow;
+}
+
+.hugepin-0 {
+    background-color: purple;
+}
+.hugepin-1 {
+    background-color: green;
+}
+.hugepin-2 {
+    background-color: blue;
+}
+.hugepin-3 {
+    background-color: white;
+}
+.hugepin-4 {
+    background-color: yellow;
+}
+.hugepin-5 {
+    background-color: red;
+}
+
 .smallpin {
     padding: 5px;
 }
 
-.smallpin-0 {
-    background-color: gray;
-}
 .smallpin-1 {
     background-color: white;
 }

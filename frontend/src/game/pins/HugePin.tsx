@@ -7,14 +7,13 @@ type HugePinProps = {
 };
 
 function getIconForPinId(id: number) {
-    return id
+    return "";
 }
 
 const HugePin: React.FC<HugePinProps> = (props) => {
   return (
-    <span className={`pin hugepin hugepin-${props.pinId}`}>
+    <span className={`pin hugepin hugepin-${props.pinId} ${props.changeable ? "actual" : ""}`}>
         {getIconForPinId(props.pinId)}
-        {props.changeable ? "." : ""}
     </span>
   );
 }
