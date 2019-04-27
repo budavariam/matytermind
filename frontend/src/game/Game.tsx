@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from './Line';
-import { GameResponse } from './types';
+import { GameResponse, GameSettings } from './types';
 
 type GameState = {
     error: { message: string } | null,
@@ -11,19 +11,13 @@ type GameState = {
     settings: GameSettings,
 };
 
-type GameSettings = {
-    pins: number,
-    colours: number,
-    lines: number,
-}
-
 const NEUTRALHUGEPIN = -1;
 const NEUTRALSMALLPIN = 0;
 const GOODGUESSPINID = 1;
 const GOODCOLOURPINID = 2;
 
 export class Game extends React.Component<{}, GameState> {
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
         const defaultSettings = {
             pins: 4,
@@ -118,7 +112,7 @@ export class Game extends React.Component<{}, GameState> {
 
     renderLines() {
         return this.state.lines.map((line: any, index: number) =>
-            (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine}></Line>)
+            (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine} settings={this.state.settings}></Line>)
         )
     }
 

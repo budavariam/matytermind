@@ -3,7 +3,7 @@ import "./pins.scss"
 
 type HugePinProps = { 
     pinId: number,
-    changeable: boolean,
+    onClick?: () => void,
 };
 
 function getIconForPinId(id: number) {
@@ -12,7 +12,7 @@ function getIconForPinId(id: number) {
 
 const HugePin: React.FC<HugePinProps> = (props) => {
   return (
-    <span className={`pin hugepin hugepin-${props.pinId} ${props.changeable ? "actual" : ""}`}>
+    <span className={`pin hugepin hugepin-${props.pinId}`} onClick={props.onClick}>
         {getIconForPinId(props.pinId)}
     </span>
   );
