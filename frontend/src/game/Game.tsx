@@ -17,24 +17,26 @@ type GameSettings = {
     lines: number,
 }
 
-const NEUTRALPIN = 0;
+const NEUTRALHUGEPIN = -1;
+const NEUTRALSMALLPIN = 0;
 const GOODGUESSPINID = 1;
 const GOODCOLOURPINID = 2;
 
 export class Game extends React.Component<{}, GameState> {
     constructor(props: any) {
         super(props);
+        const defaultSettings = {
+            pins: 4,
+            colours: 6,
+            lines: 10,
+        }
         this.state = {
             error: null,
             isLoaded: false,
             id: "",
             currentLine: 0,
-            lines: [],
-            settings: {
-                pins: 4,
-                colours: 6,
-                lines: 10,
-            }
+            lines: this.generateLines(defaultSettings),
+            settings: defaultSettings
         };
     }
 
@@ -58,7 +60,7 @@ export class Game extends React.Component<{}, GameState> {
             )
     }
 
-    addLineFromResponse(lines: any[], data: GameResponse, guess: number[]): any[] {
+    setLineFromResponse(lineIndex: number, lines: any[], data: GameResponse, guess: number[]): any[] {
         const evaluation = []
         for (let i = 0; i < data.goodGuess; i++) {
             evaluation.push(GOODGUESSPINID)
@@ -67,12 +69,12 @@ export class Game extends React.Component<{}, GameState> {
             evaluation.push(GOODCOLOURPINID)
         }
         while (evaluation.length < this.state.settings.pins) {
-            evaluation.push(NEUTRALPIN)
+            evaluation.push(NEUTRALSMALLPIN)
         }
-        lines.push({
+        lines[lineIndex] = {
             guess,
             result: evaluation,
-        })
+        }
         return lines
     }
 
@@ -93,7 +95,7 @@ export class Game extends React.Component<{}, GameState> {
                     } else {
                         this.setState((state) => ({
                             currentLine: state.currentLine + 1,
-                            lines: this.addLineFromResponse(state.lines, result, guess),
+                            lines: this.setLineFromResponse(state.currentLine, state.lines, result, guess),
                         }));
                     }
                 },
@@ -106,7 +108,15 @@ export class Game extends React.Component<{}, GameState> {
             )
     }
 
-    generateLines() {
+    generateLines(settings: GameSettings) {
+        const emptyLine = {
+            guess: Array.from({length: settings.pins}, () => NEUTRALHUGEPIN),
+            result: Array.from({length: settings.pins}, () => NEUTRALSMALLPIN),
+        }
+        return Array.from({length: settings.lines}, () => emptyLine)
+    }
+
+    renderLines() {
         return this.state.lines.map((line: any, index: number) =>
             (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine}></Line>)
         )
@@ -122,7 +132,7 @@ export class Game extends React.Component<{}, GameState> {
             return (
                 <div className="game">
                     <button onClick={() => this.submitGuess(id, [1, 4, 5, 3])}>Submit guess</button>
-                    {this.generateLines()}
+                    {this.renderLines()}
                 </div>
             );
         }
