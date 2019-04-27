@@ -1,7 +1,10 @@
+@import "../style.scss";
+
 .line {
     display: flex;
     width: 100%;
     border: 5px solid yellow;
+    background-color: $game-back-color;
 }
 
 .playarea {
@@ -22,9 +25,11 @@
     background-color: lime;
     list-style-type: none;
     display: grid;
-    grid-template-columns: 50% 50%;
     grid-template-rows: 50% 50%;
     margin-left: 30px;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .results * {
