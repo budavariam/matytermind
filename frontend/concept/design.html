@@ -1,0 +1,68 @@
+<style>
+    .line {
+        display: flex;
+        width: 100%;
+        border: 5px solid yellow;
+    }
+
+    .playarea {
+        background-color: red;
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+    }
+
+    .playarea * {
+        border: 1px solid black;
+        padding: 15px;
+    }
+    
+    .result{
+        background-color: lime;
+        list-style-type: none;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 50% 50%;
+        margin-left: 30px;
+    }
+    .result * {
+        border: 1px solid pink;
+        padding: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+<div class="game">
+<div class="line">
+    <div class="playarea">
+        <button>
+            O
+        </button>
+        <button>
+            O
+        </button>
+        <button>
+            O
+        </button>
+        <button>
+            O
+        </button>
+    </div>
+    <div class="result">
+        <span>
+            x
+        </span>
+        <span>
+            x
+        </span>
+        <span>
+            x
+        </span>
+        <span>
+            x
+        </span>
+    </div>
+</div>
+</div>

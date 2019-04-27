@@ -1,0 +1,39 @@
+.line {
+    display: flex;
+    width: 100%;
+    border: 5px solid yellow;
+}
+
+.playarea {
+    background-color: red;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.playarea * {
+    $size: 30px;
+    border: 1px solid black;
+    width: $size;
+    height: $size;
+}
+
+.results {
+    background-color: lime;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    margin-left: 30px;
+}
+
+.results * {
+    border: 1px solid pink;
+    $size: 10px;
+    border: 1px solid black;
+    width: $size;
+    height: $size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
