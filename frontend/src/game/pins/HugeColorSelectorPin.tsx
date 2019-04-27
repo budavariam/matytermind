@@ -1,30 +1,44 @@
 import React from 'react';
 import { HugePin } from './HugePin';
-import { GameSettings } from '../types';
+import { GameContextType } from '../types';
+import { GameContext } from '../context/GameContext';
+import { defaultSettings } from './../context/GameContext';
 
 type HCSPState = {
     pinId: number,
+    context: GameContextType,
 };
 
 type HCSPProps = {
     pinId: number,
-    settings: GameSettings,
 }
-export class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
+class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
     constructor(props: HCSPProps) {
         super(props);
         this.state = {
-            pinId: props.pinId
+            pinId: props.pinId,
+            context: {
+                id: "",
+                settings: defaultSettings
+            }
         }
     }
 
     changePin() {
-        this.setState((state, props) => ({
-            pinId: (state.pinId + 1) % props.settings.colours
+        this.setState((state) => ({
+            pinId: (state.pinId + 1) % state.context.settings.colours
         }))
     }
 
     render() {
-        return (<HugePin pinId={this.state.pinId} onClick={() => this.changePin()}></HugePin>)
+        return (
+            <GameContext.Provider value={this.state.context}>
+                <HugePin pinId={this.state.pinId} onClick={() => this.changePin()}></HugePin>
+            </GameContext.Provider>
+        )
     }
 }
+
+HugeColorSelectorPin.contextType = GameContext;
+
+export {HugeColorSelectorPin};

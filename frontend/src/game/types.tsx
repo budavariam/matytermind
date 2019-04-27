@@ -10,3 +10,8 @@ export type GameSettings = {
     colours: number,
     lines: number,
 }
+
+export type GameContextType = {
+    id: string,
+    settings: GameSettings,
+}

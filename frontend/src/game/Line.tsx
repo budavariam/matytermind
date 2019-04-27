@@ -3,13 +3,11 @@ import { HugePin } from './pins/HugePin';
 import { SmallPin } from './pins/SmallPin';
 import "./line.scss";
 import { HugeColorSelectorPin } from './pins/HugeColorSelectorPin';
-import { GameSettings } from './types';
 
 type LineProps = {
   pins: number[],
   results: number[],
   actual: boolean,
-  settings: GameSettings,
 };
 
 const Line: React.FC<LineProps> = (props) => {
@@ -19,7 +17,7 @@ const Line: React.FC<LineProps> = (props) => {
         {
           props.actual
             ?
-            (props.pins.map((pin, index) => (<HugeColorSelectorPin pinId={pin} key={`actual-${index}`} settings={props.settings}></HugeColorSelectorPin>)))
+            (props.pins.map((pin, index) => (<HugeColorSelectorPin pinId={pin} key={`actual-${index}`}></HugeColorSelectorPin>)))
             :
             (props.pins.map((pin, index) => (<HugePin pinId={pin} key={`${index}-${pin}`}></HugePin>)))
         }

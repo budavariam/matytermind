@@ -1,15 +1,12 @@
 import React from 'react';
 import { Line } from './Line';
-import { GameResponse, GameSettings } from './types';
+import { GameResponse, GameSettings, GameContextType } from './types';
 import { GameContext, defaultSettings } from './context/GameContext';
 
 type GameState = {
     error: { message: string } | null,
     isLoaded: boolean,
-    context: {
-        id: string,
-        settings: GameSettings,
-    },
+    context: GameContextType,
     currentLine: number,
     lines: any[],
 };
@@ -114,7 +111,7 @@ class Game extends React.Component<{}, GameState> {
 
     renderLines() {
         return this.state.lines.map((line: any, index: number) =>
-            (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine} settings={this.state.context.settings}></Line>)
+            (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine}></Line>)
         )
     }
 
