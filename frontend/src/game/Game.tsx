@@ -1,7 +1,7 @@
 import React from 'react';
 import { Line } from './Line';
 import { GameResponse, GameSettings, GameContextType } from './types';
-import { GameContext, defaultSettings } from './context/GameContext';
+import { GameContext, defaultSettings, emptyGuess, GOODGUESSPINID, GOODCOLOURPINID, NEUTRALSMALLPIN } from './context/GameContext';
 
 type GameState = {
     error: { message: string } | null,
@@ -11,11 +11,6 @@ type GameState = {
     lines: any[],
 };
 
-const NEUTRALHUGEPIN = -1;
-const NEUTRALSMALLPIN = 0;
-const GOODGUESSPINID = 1;
-const GOODCOLOURPINID = 2;
-
 class Game extends React.Component<{}, GameState> {
     constructor(props: {}) {
         super(props);
@@ -23,6 +18,8 @@ class Game extends React.Component<{}, GameState> {
             context: {
                 id: "",
                 settings: defaultSettings,
+                actualGuess: emptyGuess,
+                actualLine: 0
             },
             error: null,
             isLoaded: false,
@@ -41,6 +38,8 @@ class Game extends React.Component<{}, GameState> {
                         context: {
                             id: result.id,   
                             settings: result.settings,
+                            actualLine: 0,
+                            actualGuess: emptyGuess,
                         }
                     });
                 },
@@ -103,7 +102,7 @@ class Game extends React.Component<{}, GameState> {
 
     generateLines(settings: GameSettings) {
         const emptyLine = {
-            guess: Array.from({length: settings.pins}, () => NEUTRALHUGEPIN),
+            guess: emptyGuess,
             result: Array.from({length: settings.pins}, () => NEUTRALSMALLPIN),
         }
         return Array.from({length: settings.lines}, () => emptyLine)

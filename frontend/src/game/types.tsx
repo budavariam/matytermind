@@ -14,4 +14,6 @@ export type GameSettings = {
 export type GameContextType = {
     id: string,
     settings: GameSettings,
+    actualGuess: number[],
+    actualLine: number,
 }

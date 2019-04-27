@@ -1,7 +1,7 @@
 import React from 'react';
 import { HugePin } from './HugePin';
 import { GameContextType } from '../types';
-import { GameContext } from '../context/GameContext';
+import { GameContext, emptyGuess } from '../context/GameContext';
 import { defaultSettings } from './../context/GameContext';
 
 type HCSPState = {
@@ -19,7 +19,9 @@ class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
             pinId: props.pinId,
             context: {
                 id: "",
-                settings: defaultSettings
+                settings: defaultSettings,
+                actualLine: 0,
+                actualGuess: emptyGuess,
             }
         }
     }
