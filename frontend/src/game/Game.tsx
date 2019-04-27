@@ -10,7 +10,7 @@ type GameState = {
     lines: any[],
 };
 
-const NEUTRALPIN = -1;
+const NEUTRALPIN = 0;
 const GOODGUESSPINID = 1;
 const GOODCOLOURPINID = 2;
 

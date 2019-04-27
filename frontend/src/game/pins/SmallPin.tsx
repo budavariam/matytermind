@@ -5,15 +5,9 @@ type SmallPinProps = {
     pinId: number,
 };
 
-function getIconForPinId(id: number) {
-    return id
-}
-
 const SmallPin: React.FC<SmallPinProps> = (props) => {
   return (
-    <span className={`pin smallpin smallpin-${props.pinId}`}>
-        {getIconForPinId(props.pinId)}
-    </span>
+    <span className={`pin smallpin smallpin-${props.pinId}`}></span>
   );
 }
 
