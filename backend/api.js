@@ -18,7 +18,10 @@ function start (_, res) {
         secret: game.generateSequence(config),
         guesses: []
     }
-    res.send({id})
+    res.send({
+        id, 
+        settings: config.gameSettings
+    })
 }
 
 function guess (req, res) {
@@ -29,7 +32,7 @@ function guess (req, res) {
 
     const guess = req.body.guess
     const id = req.body.id
-    if (!guess.length || guess.some((gue) => !isFinite(gue) || isNaN(gue) || gue > config.colours || gue < 0 )) {
+    if (!guess.length || guess.some((gue) => !isFinite(gue) || isNaN(gue) || gue > config.gameSettings.colours || gue < 0 )) {
         res.status(400).send({message: "Invalid parameters"})
         return
     }
@@ -41,7 +44,7 @@ function guess (req, res) {
     }
 
     const secret = gameInstance.secret
-    if (gameInstance.isOver || gameInstance.guesses.length >= config.lines) {
+    if (gameInstance.isOver || gameInstance.guesses.length >= config.gameSettings.lines) {
         res.status(400).send({message: "Game has already finished"})
         return
     }

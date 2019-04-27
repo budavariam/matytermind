@@ -2,14 +2,16 @@ const expect = require('chai').expect;
 const game = require('../game');
 
 const config = {
-  pins: 4,
-  colours: 6,
+  gameSettings: {
+    pins: 4,
+    colours: 6,
+  }
 }
 
 describe('generateSequence()', function () {
   it('should generate as many elements as many pins there are', function () {
     const seq = game.generateSequence(config);
-    expect(seq.length).to.be.equal(config.pins);
+    expect(seq.length).to.be.equal(config.gameSettings.pins);
   });
 });
 

@@ -8,27 +8,33 @@ type GameState = {
     id: string,
     currentLine: number,
     lines: any[],
+    settings: GameSettings,
 };
+
+type GameSettings = {
+    pins: number,
+    colours: number,
+    lines: number,
+}
 
 const NEUTRALPIN = 0;
 const GOODGUESSPINID = 1;
 const GOODCOLOURPINID = 2;
 
 export class Game extends React.Component<{}, GameState> {
-    private config: any;
     constructor(props: any) {
         super(props);
-        this.config = {
-            pins: 4,
-            colours: 6,
-            lines: 10,
-        }
         this.state = {
             error: null,
             isLoaded: false,
             id: "",
             currentLine: 0,
             lines: [],
+            settings: {
+                pins: 4,
+                colours: 6,
+                lines: 10,
+            }
         };
     }
 
@@ -39,7 +45,8 @@ export class Game extends React.Component<{}, GameState> {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        id: result.id
+                        id: result.id,
+                        settings: result.settings,
                     });
                 },
                 (error) => {
@@ -59,7 +66,7 @@ export class Game extends React.Component<{}, GameState> {
         for (let i = 0; i < data.goodColour; i++) {
             evaluation.push(GOODCOLOURPINID)
         }
-        while (evaluation.length < this.config.pins) {
+        while (evaluation.length < this.state.settings.pins) {
             evaluation.push(NEUTRALPIN)
         }
         lines.push({

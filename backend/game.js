@@ -27,7 +27,7 @@ function evaluateGuess(config, secret, guess) {
         }
         return acc
     }, 0)
-    const isOver = (goodGuess == config.pins)
+    const isOver = (goodGuess == config.gameSettings.pins)
     return {
         goodGuess,
         goodColour,
@@ -36,7 +36,7 @@ function evaluateGuess(config, secret, guess) {
 }
 
 function generateSequence(config) {
-    return Array.from({length: config.pins}, () => Math.floor(Math.random() * config.colours));
+    return Array.from({length: config.gameSettings.pins}, () => Math.floor(Math.random() * config.gameSettings.colours));
 }
 
 module.exports = {
