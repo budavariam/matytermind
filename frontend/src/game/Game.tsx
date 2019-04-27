@@ -131,7 +131,9 @@ export class Game extends React.Component<{}, GameState> {
         } else {
             return (
                 <div className="game">
-                    <button onClick={() => this.submitGuess(id, [1, 4, 5, 3])}>Submit guess</button>
+                    <button onClick={
+                        () => this.submitGuess(id, Array.from({length: this.state.settings.pins}, () => Math.floor(Math.random() * this.state.settings.colours)))
+                    }>Submit guess</button>
                     {this.renderLines()}
                 </div>
             );
