@@ -1,14 +1,17 @@
 import React from 'react';
 import { Line } from './Line';
 import { GameResponse, GameSettings } from './types';
+import { GameContext, defaultSettings } from './context/GameContext';
 
 type GameState = {
     error: { message: string } | null,
     isLoaded: boolean,
-    id: string,
+    context: {
+        id: string,
+        settings: GameSettings,
+    },
     currentLine: number,
     lines: any[],
-    settings: GameSettings,
 };
 
 const NEUTRALHUGEPIN = -1;
@@ -16,21 +19,18 @@ const NEUTRALSMALLPIN = 0;
 const GOODGUESSPINID = 1;
 const GOODCOLOURPINID = 2;
 
-export class Game extends React.Component<{}, GameState> {
+class Game extends React.Component<{}, GameState> {
     constructor(props: {}) {
         super(props);
-        const defaultSettings = {
-            pins: 4,
-            colours: 6,
-            lines: 10,
-        }
         this.state = {
+            context: {
+                id: "",
+                settings: defaultSettings,
+            },
             error: null,
             isLoaded: false,
-            id: "",
             currentLine: 0,
             lines: this.generateLines(defaultSettings),
-            settings: defaultSettings
         };
     }
 
@@ -41,8 +41,10 @@ export class Game extends React.Component<{}, GameState> {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        id: result.id,
-                        settings: result.settings,
+                        context: {
+                            id: result.id,   
+                            settings: result.settings,
+                        }
                     });
                 },
                 (error) => {
@@ -62,7 +64,7 @@ export class Game extends React.Component<{}, GameState> {
         for (let i = 0; i < data.goodColour; i++) {
             evaluation.push(GOODCOLOURPINID)
         }
-        while (evaluation.length < this.state.settings.pins) {
+        while (evaluation.length < this.state.context.settings.pins) {
             evaluation.push(NEUTRALSMALLPIN)
         }
         lines[lineIndex] = {
@@ -112,25 +114,31 @@ export class Game extends React.Component<{}, GameState> {
 
     renderLines() {
         return this.state.lines.map((line: any, index: number) =>
-            (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine} settings={this.state.settings}></Line>)
+            (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine} settings={this.state.context.settings}></Line>)
         )
     }
 
     render() {
-        const { error, isLoaded, id } = this.state;
+        const { error, isLoaded, context } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
             return (
-                <div className="game">
-                    <button onClick={
-                        () => this.submitGuess(id, Array.from({length: this.state.settings.pins}, () => Math.floor(Math.random() * this.state.settings.colours)))
-                    }>Submit guess</button>
-                    {this.renderLines()}
-                </div>
+                <GameContext.Provider value={this.state.context}>
+                    <div className="game">
+                        <button onClick={
+                            () => this.submitGuess(context.id, Array.from({length: this.state.context.settings.pins}, () => Math.floor(Math.random() * this.state.context.settings.colours)))
+                        }>Submit guess</button>
+                        {this.renderLines()}
+                    </div>
+                </GameContext.Provider>
             );
         }
     }
 }
+
+Game.contextType = GameContext;
+
+export {Game};
