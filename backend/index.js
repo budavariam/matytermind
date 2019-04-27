@@ -4,6 +4,7 @@ const config = require('./config')
 const path = require('path')
 
 const app = express()
+app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '..', 'frontend', 'build')))
 app.get('/api/ping', api.ping)
 app.get('/api/start', api.start)

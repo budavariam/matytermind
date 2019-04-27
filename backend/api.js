@@ -22,14 +22,14 @@ function start (_, res) {
 }
 
 function guess (req, res) {
-    if (!req.body.guess || !req.body.id) {
+    if (!req.body || !req.body.guess || !req.body.id) {
         res.status(400).send({message: "Parameters missing from request"})
         return
     }
 
     const guess = req.body.guess
     const id = req.body.id
-    if (!guess.length || guess.some((gue) => !isFinite(gue) || isNaN(gue) || gue > colours || gue < 0 )) {
+    if (!guess.length || guess.some((gue) => !isFinite(gue) || isNaN(gue) || gue > config.colours || gue < 0 )) {
         res.status(400).send({message: "Invalid parameters"})
         return
     }
@@ -46,11 +46,11 @@ function guess (req, res) {
         return
     }
 
-    const {evaluation, isOver} = game.evaluateGuess(config, secret, guess)
-    gameInstance.guesses.push({guess, evaluation})
+    const {goodGuess, goodColour, isOver} = game.evaluateGuess(config, secret, guess)
+    gameInstance.guesses.push({guess, evaluation: {goodGuess, goodColour, isOver}})
     gameInstance.isOver = isOver
 
-    res.send({evaluation, isOver})
+    res.send({goodGuess, goodColour, isOver})
 }
 
 module.exports = {
