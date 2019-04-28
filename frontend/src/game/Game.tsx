@@ -104,6 +104,7 @@ class Game extends React.Component<{}, GameState> {
                                 const context = Object.assign({}, state.context)
                                 context.actualLine++
                                 return {
+                                    isOver: result.isOver,
                                     context,
                                     lines: this.setLineFromResponse(state.context.actualLine, state.lines, result, guess),
                                 }
