@@ -4,5 +4,5 @@ module.exports = {
         pins: 4,
         lines: 10,
     },
-    port: 3000,
+    port: 8080,
 }

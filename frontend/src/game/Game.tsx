@@ -56,9 +56,10 @@ class Game extends React.Component<{}, GameState> {
                     });
                 },
                 (error) => {
+                    console.error(error)
                     this.setState({
                         isLoaded: true,
-                        error
+                        error: {message: "There was an error during server request, sorry for the inconvenience :("},
                     });
                 }
             )
@@ -112,9 +113,10 @@ class Game extends React.Component<{}, GameState> {
                         }
                     },
                     (error) => {
+                        console.error(error)
                         this.setState({
                             isLoaded: true,
-                            error
+                            error: {message: "There was an error during server request, sorry for the inconvenience :("},
                         });
                     }
                 )
