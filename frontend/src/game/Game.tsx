@@ -138,16 +138,16 @@ class Game extends React.Component<{}, GameState> {
     render() {
         const { error, isLoaded, context } = this.state;
         if (error) {
-            return <div>Error: {error.message}</div>;
+            return <div className="header">Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <div className="header">Loading...</div>;
         } else {
             return (
                 <GameContext.Provider value={this.state.context}>
                     <div className="game">
                         <div className="header">
                             {(this.state.isOver && this.state.context.actualLine < this.state.context.settings.lines) && <div className="endMessage">Congratulations! You won!</div>}
-                            {(this.state.isOver && this.state.context.actualLine === this.state.context.settings.lines) && <div className="endMessage">You lost :(</div>}
+                            {(!this.state.isOver && this.state.context.actualLine === this.state.context.settings.lines) && <div className="endMessage">You lost :(</div>}
                             <div className="button" onClick={
                                 () => this.submitGuess(context.id, this.state.context.actualGuess)
                             }>Submit guess</div>
