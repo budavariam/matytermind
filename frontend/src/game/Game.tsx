@@ -2,13 +2,14 @@ import React from 'react';
 import { Line } from './Line';
 import { GameResponse, GameSettings, GameContextType } from './types';
 import { GameContext, defaultSettings, emptyGuess, GOODGUESSPINID, GOODCOLOURPINID, NEUTRALSMALLPIN } from './context/GameContext';
+import "./game.scss";
 
 type GameState = {
     error: { message: string } | null,
     isLoaded: boolean,
     context: GameContextType,
-    currentLine: number,
     lines: any[],
+    isOver: boolean,
 };
 
 class Game extends React.Component<{}, GameState> {
@@ -16,7 +17,7 @@ class Game extends React.Component<{}, GameState> {
         this.setState(state => {
             const context = state.context
             context.actualGuess = actualGuess
-            return {context}
+            return { context }
         })
     };;
     constructor(props: {}) {
@@ -31,8 +32,8 @@ class Game extends React.Component<{}, GameState> {
             },
             error: null,
             isLoaded: false,
-            currentLine: 0,
             lines: this.generateLines(defaultSettings),
+            isOver: false,
         };
     }
 
@@ -43,13 +44,14 @@ class Game extends React.Component<{}, GameState> {
             .then(
                 (result) => {
                     this.setState({
+                        isOver: result.isOver,
                         isLoaded: true,
                         context: {
                             id: result.id,
                             settings: result.settings,
                             actualLine: 0,
                             actualGuess: emptyGuess,
-                            changeGuess: (actualGuess: number[]) => {this.changeGuess(actualGuess) }
+                            changeGuess: (actualGuess: number[]) => { this.changeGuess(actualGuess) }
                         }
                     });
                 },
@@ -74,40 +76,48 @@ class Game extends React.Component<{}, GameState> {
             evaluation.push(NEUTRALSMALLPIN)
         }
         lines[lineIndex] = {
-            guess: guess.map(e=>e),
+            guess: guess.map(e => e),
             result: evaluation,
         }
         return lines
     }
 
     submitGuess(id: string, guess: number[]) {
-        fetch('/api/guess', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id, guess })
-        })
-            .then(res => res.json())
-            .then(
-                (result: GameResponse) => {
-                    if (result.message) {
-                        this.setState({ error: { message: result.message } });
-                    } else {
-                        this.setState((state) => ({
-                            currentLine: state.currentLine + 1,
-                            lines: this.setLineFromResponse(state.currentLine, state.lines, result, guess),
-                        }));
-                    }
+        if (guess.some(el => el < 0 || el > this.state.context.settings.colours)) {
+            console.error("Invalid data!")
+        } else {
+            fetch('/api/guess', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+                body: JSON.stringify({ id, guess })
+            })
+                .then(res => res.json())
+                .then(
+                    (result: GameResponse) => {
+                        if (result.message) {
+                            this.setState({ error: { message: result.message } });
+                        } else {
+                            this.setState((state) => {
+                                const context = Object.assign({}, state.context)
+                                context.actualLine++
+                                return {
+                                    context,
+                                    lines: this.setLineFromResponse(state.context.actualLine, state.lines, result, guess),
+                                }
+                            });
+                        }
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )
+        }
     }
 
     generateLines(settings: GameSettings) {
@@ -117,10 +127,10 @@ class Game extends React.Component<{}, GameState> {
         }
         return Array.from({ length: settings.lines }, () => emptyLine)
     }
-    
+
     renderLines() {
         return this.state.lines.map((line: any, index: number) =>
-            (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine}></Line>)
+            (<Line key={index} pins={line.guess} results={line.result} actual={(!this.state.isOver) && (index === this.state.context.actualLine)}></Line>)
         )
     }
 
@@ -134,9 +144,13 @@ class Game extends React.Component<{}, GameState> {
             return (
                 <GameContext.Provider value={this.state.context}>
                     <div className="game">
-                        <button onClick={
-                            () => this.submitGuess(context.id, this.state.context.actualGuess)
-                        }>Submit guess</button>
+                        <div className="header">
+                            {(this.state.isOver && this.state.context.actualLine < this.state.context.settings.lines) && <div className="endMessage">Congratulations! You won!</div>}
+                            {(this.state.isOver && this.state.context.actualLine === this.state.context.settings.lines) && <div className="endMessage">You lost :(</div>}
+                            <div className="button" onClick={
+                                () => this.submitGuess(context.id, this.state.context.actualGuess)
+                            }>Submit guess</div>
+                        </div>
                         {this.renderLines()}
                     </div>
                 </GameContext.Provider>

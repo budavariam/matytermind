@@ -1,5 +1,26 @@
 @import "../style";
 
 .game {
-    background-color: $game-back-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 410px;
 }
+
+.button {
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 20px;
+    padding: 30px;
+    background-color: gray;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
