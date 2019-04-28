@@ -18,6 +18,7 @@ function start (_, res) {
         secret: game.generateSequence(config),
         guesses: []
     }
+    console.log(id, games[id].secret)
     res.send({
         id, 
         settings: config.gameSettings
@@ -52,7 +53,7 @@ function guess (req, res) {
     const {goodGuess, goodColour, isOver} = game.evaluateGuess(config, secret, guess)
     gameInstance.guesses.push({guess, evaluation: {goodGuess, goodColour, isOver}})
     gameInstance.isOver = isOver
-
+    console.log(id, games[id].secret, guess, goodGuess, goodColour, isOver)
     res.send({goodGuess, goodColour, isOver})
 }
 
