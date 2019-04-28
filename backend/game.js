@@ -10,7 +10,7 @@ function evaluateGuess(config, secret, guess) {
     const goodGuess = secret.reduce(
         (acc, curr, index) => acc + ((curr === guess[index]) ? 1 : 0), 0
     )
-    const goodColourZip = guess
+    const {guesslist: gcRemainingGuesses, secretHistogram: gcSecretHistogram} = guess
         .map((value, index) => {
             // remove good guesses
             if (secret[index] != value) {
@@ -19,15 +19,16 @@ function evaluateGuess(config, secret, guess) {
             return null
         })
         .filter(p => p) // remove null values
-    const goodColorSecretHistogram = goodColourZip.reduce((acc, curr) => {
+        .reduce((acc, curr) => {
             //create histogram from the rest
-            acc[curr.secretP] = acc[curr.secretP] ? (acc[curr.secretP] + 1) : 1
+            acc.secretHistogram[curr.secretP] = acc.secretHistogram[curr.secretP] ? (acc.secretHistogram[curr.secretP] + 1) : 1
+            acc.guesslist.push(curr.guessP)
             return acc
-        }, {})
-    const goodColour = goodColourZip.reduce((acc, curr) => {
-        if (goodColorSecretHistogram[curr.guessP]) {
+        }, {secretHistogram: {}, guesslist: []})
+    const goodColour = gcRemainingGuesses.reduce((acc, curr) => {
+        if (gcSecretHistogram[curr]) {
             acc++
-            goodColorSecretHistogram[curr.guessP]--
+            gcSecretHistogram[curr]--
         }
         return acc
     }, 0)
