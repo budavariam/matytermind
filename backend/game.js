@@ -11,16 +11,9 @@ function evaluateGuess(config, secret, guess) {
         (acc, curr, index) => acc + ((curr === guess[index]) ? 1 : 0), 0
     )
     const {guesslist: gcRemainingGuesses, secretHistogram: gcSecretHistogram} = guess
-        .map((value, index) => {
-            // remove good guesses
-            if (secret[index] != value) {
-                return { secretP: secret[index], guessP: value }
-            }
-            return null
-        })
-        .filter(p => p) // remove null values
+        .map((value, index) => ({secretP: secret[index], guessP: value }))
+        .filter(p => p.guessP != p.secretP)
         .reduce((acc, curr) => {
-            //create histogram from the rest
             acc.secretHistogram[curr.secretP] = acc.secretHistogram[curr.secretP] ? (acc.secretHistogram[curr.secretP] + 1) : 1
             acc.guesslist.push(curr.guessP)
             return acc
@@ -49,4 +42,4 @@ module.exports = {
     generateSequence,
 }
 
-evaluateGuess(require("./config"), [2, 2, 2, 1], [1, 2, 1, 1])
+// evaluateGuess(require("./config"), [2, 2, 2, 1], [1, 2, 1, 1])
