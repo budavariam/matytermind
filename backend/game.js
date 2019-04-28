@@ -43,5 +43,3 @@ module.exports = {
     evaluateGuess,
     generateSequence,
 }
-
-evaluateGuess(require("./config"), [1,2,3,4], [1,2,3,4])
