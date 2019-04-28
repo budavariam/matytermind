@@ -1,9 +1,18 @@
 # Logic game
 
+## Dev
+
+```bash
+npm start
+# open up a different shell:
+cd frontend;
+npm start
+```
+
 ## Deploying to Heroku
 
 ```bash
-heroku create
+heroku login
 git push heroku master
 heroku open
 ```
