@@ -146,13 +146,21 @@ class Game extends React.Component<{}, GameState> {
                 <GameContext.Provider value={this.state.context}>
                     <div className="game">
                         <div className="header">
-                            {(this.state.isOver && this.state.context.actualLine < this.state.context.settings.lines) && <div className="endMessage">Congratulations! You won!</div>}
-                            {(!this.state.isOver && this.state.context.actualLine === this.state.context.settings.lines) && <div className="endMessage">You lost :(</div>}
-                            <div className="button" onClick={
-                                () => this.submitGuess(context.id, this.state.context.actualGuess)
-                            }>Submit guess</div>
+                            {(this.state.isOver && this.state.context.actualLine < this.state.context.settings.lines) && (
+                                <div className="button" onClick={() => {window.location.reload();}} >Congratulations!<br/>You won!<br/>Do you want to play again?</div>
+                            )}
+                            {(!this.state.isOver && this.state.context.actualLine === this.state.context.settings.lines) && (
+                                <div className="button" onClick={() => {window.location.reload();}}>You lost :( Try again?</div>
+                            )}
+                            {(!this.state.isOver && this.state.context.actualLine < this.state.context.settings.lines) && (
+                                <div className="button" onClick={
+                                    () => this.submitGuess(context.id, this.state.context.actualGuess)
+                                }>Submit guess</div>)
+                            }
                         </div>
-                        {this.renderLines()}
+                        <div className="linecontainer">
+                            {this.renderLines()}
+                        </div>
                     </div>
                 </GameContext.Provider>
             );
