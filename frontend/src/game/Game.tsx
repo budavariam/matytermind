@@ -12,6 +12,13 @@ type GameState = {
 };
 
 class Game extends React.Component<{}, GameState> {
+    public changeGuess(actualGuess: number[]): void {
+        this.setState(state => {
+            const context = state.context
+            context.actualGuess = actualGuess
+            return {context}
+        })
+    };;
     constructor(props: {}) {
         super(props);
         this.state = {
@@ -19,7 +26,8 @@ class Game extends React.Component<{}, GameState> {
                 id: "",
                 settings: defaultSettings,
                 actualGuess: emptyGuess,
-                actualLine: 0
+                actualLine: 0,
+                changeGuess: this.changeGuess
             },
             error: null,
             isLoaded: false,
@@ -27,6 +35,7 @@ class Game extends React.Component<{}, GameState> {
             lines: this.generateLines(defaultSettings),
         };
     }
+
 
     componentDidMount() {
         fetch("/api/start")
@@ -36,10 +45,11 @@ class Game extends React.Component<{}, GameState> {
                     this.setState({
                         isLoaded: true,
                         context: {
-                            id: result.id,   
+                            id: result.id,
                             settings: result.settings,
                             actualLine: 0,
                             actualGuess: emptyGuess,
+                            changeGuess: (actualGuess: number[]) => {this.changeGuess(actualGuess) }
                         }
                     });
                 },
@@ -64,7 +74,7 @@ class Game extends React.Component<{}, GameState> {
             evaluation.push(NEUTRALSMALLPIN)
         }
         lines[lineIndex] = {
-            guess,
+            guess: guess.map(e=>e),
             result: evaluation,
         }
         return lines
@@ -83,7 +93,7 @@ class Game extends React.Component<{}, GameState> {
             .then(
                 (result: GameResponse) => {
                     if (result.message) {
-                        this.setState({error: {message: result.message}});
+                        this.setState({ error: { message: result.message } });
                     } else {
                         this.setState((state) => ({
                             currentLine: state.currentLine + 1,
@@ -102,12 +112,12 @@ class Game extends React.Component<{}, GameState> {
 
     generateLines(settings: GameSettings) {
         const emptyLine = {
-            guess: emptyGuess,
-            result: Array.from({length: settings.pins}, () => NEUTRALSMALLPIN),
+            guess: emptyGuess.map(e => e),
+            result: Array.from({ length: settings.pins }, () => NEUTRALSMALLPIN),
         }
-        return Array.from({length: settings.lines}, () => emptyLine)
+        return Array.from({ length: settings.lines }, () => emptyLine)
     }
-
+    
     renderLines() {
         return this.state.lines.map((line: any, index: number) =>
             (<Line key={index} pins={line.guess} results={line.result} actual={index === this.state.currentLine}></Line>)
@@ -125,7 +135,7 @@ class Game extends React.Component<{}, GameState> {
                 <GameContext.Provider value={this.state.context}>
                     <div className="game">
                         <button onClick={
-                            () => this.submitGuess(context.id, Array.from({length: this.state.context.settings.pins}, () => Math.floor(Math.random() * this.state.context.settings.colours)))
+                            () => this.submitGuess(context.id, this.state.context.actualGuess)
                         }>Submit guess</button>
                         {this.renderLines()}
                     </div>
@@ -137,4 +147,4 @@ class Game extends React.Component<{}, GameState> {
 
 Game.contextType = GameContext;
 
-export {Game};
+export { Game };

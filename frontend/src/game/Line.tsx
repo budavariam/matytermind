@@ -17,7 +17,7 @@ const Line: React.FC<LineProps> = (props) => {
         {
           props.actual
             ?
-            (props.pins.map((pin, index) => (<HugeColorSelectorPin pinId={pin} key={`actual-${index}`}></HugeColorSelectorPin>)))
+            (props.pins.map((pin, index) => (<HugeColorSelectorPin pinId={pin} key={`actual-${index}`} pinIndex={index}></HugeColorSelectorPin>)))
             :
             (props.pins.map((pin, index) => (<HugePin pinId={pin} key={`${index}-${pin}`}></HugePin>)))
         }
