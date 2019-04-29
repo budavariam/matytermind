@@ -5,10 +5,15 @@
 
 .hugepin {
     padding: 20px;
+    box-shadow: inset -3px -3px 10px 0px #000;
+}
+
+.pin.hugepin--1 {
+    box-shadow: inset 4px 4px 10px 0px #555;
 }
 
 .line.actual .hugepin {
-    border-color: yellow;
+    border-color: #969696;
 }
 
 .hugepin-0 {
@@ -32,6 +37,10 @@
 
 .smallpin {
     padding: 5px;
+    box-shadow: inset -2px -2px 4px 0px #555
+}
+.pin.smallpin-0 {
+    box-shadow: inset 2px 2px 4px 0px #555;
 }
 
 .smallpin-1 {
