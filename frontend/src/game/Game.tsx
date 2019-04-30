@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from './Line';
-import { GameResponse, GameSettings, GameContextType } from './types';
+import { GameResponse, GameSettings } from './types';
 import { GameContext, defaultSettings, emptyGuess, GOODGUESSPINID, GOODCOLOURPINID, NEUTRALSMALLPIN } from './context/GameContext';
 import "./game.scss";
 
@@ -44,7 +44,7 @@ class Game extends React.Component<{}, GameState> {
             )
     }
 
-    setLineFromResponse(lineIndex: number, lines: any[], data: GameResponse, guess: number[], CONTEXTpins: number): any[] {
+    setLineFromResponse(lines: any[], data: GameResponse): any[] {
         const evaluation = []
         for (let i = 0; i < data.goodGuess; i++) {
             evaluation.push(GOODGUESSPINID)
@@ -52,18 +52,19 @@ class Game extends React.Component<{}, GameState> {
         for (let i = 0; i < data.goodColour; i++) {
             evaluation.push(GOODCOLOURPINID)
         }
-        while (evaluation.length < CONTEXTpins) {
+        while (evaluation.length < this.context.settings.pins) {
             evaluation.push(NEUTRALSMALLPIN)
         }
-        lines[lineIndex] = {
-            guess: guess.map(e => e),
+        lines[this.context.actualLine] = {
+            guess: this.context.actualGuess.map((e: number) => e),
             result: evaluation,
         }
+        this.context.nextLine()
         return lines
     }
 
-    submitGuess(id: string, guess: number[], settings: GameSettings, actualLine: number, nextLine: ()=>void) {
-        if (guess.some(el => el < 0 || el > settings.colours)) {
+    submitGuess() {
+        if (this.context.actualGuess.some((el: number) => el < 0 || el > this.context.settings.colours)) {
             console.error("Invalid data!")
         } else {
             fetch('/api/guess', {
@@ -72,7 +73,7 @@ class Game extends React.Component<{}, GameState> {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id, guess })
+                body: JSON.stringify({ id: this.context.id, guess: this.context.actualGuess })
             })
                 .then(res => res.json())
                 .then(
@@ -81,10 +82,9 @@ class Game extends React.Component<{}, GameState> {
                             this.setState({ error: { message: result.message } });
                         } else {
                             this.setState((state) => {
-                                nextLine()
                                 return {
                                     isOver: result.isOver,
-                                    lines: this.setLineFromResponse(actualLine, state.lines, result, guess, settings.pins),
+                                    lines: this.setLineFromResponse(state.lines, result),
                                 }
                             });
                         }
@@ -108,9 +108,9 @@ class Game extends React.Component<{}, GameState> {
         return Array.from({ length: settings.lines }, () => emptyLine)
     }
 
-    renderLines(CONTEXTactualLine: number) {
+    renderLines() {
         return this.state.lines.map((line: any, index: number) =>
-            (<Line key={index} pins={line.guess} results={line.result} actual={(!this.state.isOver) && (index === CONTEXTactualLine)}></Line>)
+            (<Line key={index} pins={line.guess} results={line.result} actual={(!this.state.isOver) && (index === this.context.actualLine)}></Line>)
         )
     }
 
@@ -122,29 +122,25 @@ class Game extends React.Component<{}, GameState> {
             return <div className="header">Loading...</div>;
         } else {
             return (
-                <GameContext.Consumer>
-                    {({ actualLine, settings, id, actualGuess, nextLine }) => (
-                        <div className="game">
-                            <div className="header">
-                                {(this.state.isOver && actualLine < settings.lines) && (
-                                    <div className="button" onClick={() => { window.location.reload(); }} >Congratulations!<br />You won!<br />Do you want to play again?</div>
-                                )}
-                                {(!this.state.isOver && actualLine === settings.lines) && (
-                                    <div className="button" onClick={() => { window.location.reload(); }}>You lost :( Try again?</div>
-                                )}
-                                {(!this.state.isOver && actualLine < settings.lines) && (
-                                    <div className="button" onClick={
-                                        () => this.submitGuess(id, actualGuess, settings, actualLine, nextLine)
-                                    }>Submit guess</div>)
-                                }
-                            </div>
-                            <div className="linecontainer">
-                                {this.renderLines(actualLine)}
-                            </div>
-                        </div>
-                    )}
-                </GameContext.Consumer>
-            );
+                <div className="game">
+                    <div className="header">
+                        {(this.state.isOver && this.context.actualLine < this.context.settings.lines) && (
+                            <div className="button" onClick={() => { window.location.reload(); }} >Congratulations!<br />You won!<br />Do you want to play again?</div>
+                        )}
+                        {(!this.state.isOver && this.context.actualLine === this.context.settings.lines) && (
+                            <div className="button" onClick={() => { window.location.reload(); }}>You lost :( Try again?</div>
+                        )}
+                        {(!this.state.isOver && this.context.actualLine < this.context.settings.lines) && (
+                            <div className="button" onClick={
+                                () => this.submitGuess()
+                            }>Submit guess</div>)
+                        }
+                    </div>
+                    <div className="linecontainer">
+                        {this.renderLines()}
+                    </div>
+                </div>
+            )
         }
     }
 }
