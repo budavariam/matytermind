@@ -17,4 +17,6 @@ export type GameContextType = {
     actualGuess: number[],
     actualLine: number,
     changeGuess: (actualGuess: number[]) => void,
+    nextLine: () => void,
+    setId: (id: string) => void,
 }

@@ -14,12 +14,20 @@ export const GOODCOLOURPINID = 2;
 
 export const emptyGuess = Array.from({length: defaultSettings.pins}, () => NEUTRALHUGEPIN)
 
-const defaultGameContext: GameContextType =  {
+export const defaultGameContext: GameContextType = {
     id: "",
     settings: defaultSettings,
     actualGuess: emptyGuess,
     actualLine: 0,
-    changeGuess: (guess: number[]) => {}
+    changeGuess: (guess: number[]) => {
+        defaultGameContext.actualGuess = guess
+    },
+    nextLine: () => {
+        defaultGameContext.actualLine++
+    },
+    setId: (id: string) => {
+        defaultGameContext.id = id;
+    }
 }
 
 export const GameContext = React.createContext(defaultGameContext);

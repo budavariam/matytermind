@@ -1,12 +1,9 @@
 import React from 'react';
 import { HugePin } from './HugePin';
-import { GameContextType } from '../types';
-import { GameContext, emptyGuess } from '../context/GameContext';
-import { defaultSettings } from './../context/GameContext';
+import { GameContext } from '../context/GameContext';
 
 type HCSPState = {
     pinId: number,
-    context: GameContextType,
 };
 
 type HCSPProps = {
@@ -18,28 +15,21 @@ class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
         super(props);
         this.state = {
             pinId: props.pinId,
-            context: {
-                id: "",
-                settings: defaultSettings,
-                actualLine: 0,
-                actualGuess: emptyGuess,
-                changeGuess: (_) => {}
-            }
         }
     }
 
-    changePin(callback: () => void) {
+    changePin(colours: number, callback: () => void) {
         this.setState((state) => ({
-            pinId: (state.pinId + 1) % state.context.settings.colours
+            pinId: (state.pinId + 1) % colours
         }), callback)
     }
 
     render() {
         return (
             <GameContext.Consumer>
-            {({actualGuess, changeGuess}) => (
+            {({actualGuess, changeGuess, settings}) => (
                 <HugePin pinId={this.state.pinId} onClick={() => {
-                    this.changePin(() => {
+                    this.changePin(settings.colours, () => {
                         actualGuess[this.props.pinIndex] = this.state.pinId
                         changeGuess(actualGuess)
                     })

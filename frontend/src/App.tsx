@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.scss';
 import { Game } from './game/Game';
+import { GameContext, defaultGameContext } from './game/context/GameContext';
 
 const App: React.FC = () => {
   return (
@@ -9,7 +10,9 @@ const App: React.FC = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
-      <Game></Game>
+      <GameContext.Provider value={defaultGameContext}>
+        <Game></Game>
+      </GameContext.Provider>
     </div>
   );
 }
