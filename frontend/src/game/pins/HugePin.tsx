@@ -12,9 +12,9 @@ function getIconForPinId(id: number) {
 
 const HugePin: React.FC<HugePinProps> = (props) => {
   return (
-    <span className={`pin hugepin hugepin-${props.pinId}`} onClick={props.onClick}>
+    <div className={`pin hugepin hugepin-${props.pinId}`} onClick={props.onClick}>
         {getIconForPinId(props.pinId)}
-    </span>
+    </div>
   );
 }
 

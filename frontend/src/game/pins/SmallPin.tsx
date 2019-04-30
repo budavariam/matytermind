@@ -7,7 +7,7 @@ type SmallPinProps = {
 
 const SmallPin: React.FC<SmallPinProps> = (props) => {
   return (
-    <span className={`pin smallpin smallpin-${props.pinId}`}></span>
+    <div className={`pin smallpin smallpin-${props.pinId}`}></div>
   );
 }
 

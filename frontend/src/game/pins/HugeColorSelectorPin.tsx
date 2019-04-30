@@ -4,6 +4,7 @@ import { GameContext } from '../context/GameContext';
 
 type HCSPState = {
     pinId: number,
+    opened: boolean,
 };
 
 type HCSPProps = {
@@ -15,28 +16,41 @@ class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
         super(props);
         this.state = {
             pinId: props.pinId,
+            opened: false
         }
     }
 
-    changePin(colours: number, callback: () => void) {
-        this.setState((state) => ({
-            pinId: (state.pinId + 1) % colours
-        }), callback)
+    selectPin(selectablePin: number, actualGuess: number[], changeGuess: (g: number[]) => void) {
+        this.setState({ pinId: selectablePin })
+        actualGuess[this.props.pinIndex] = selectablePin
+        changeGuess(actualGuess)
     }
 
     render() {
         return (
             <GameContext.Consumer>
-            {({actualGuess, changeGuess, settings}) => (
-                <HugePin pinId={this.state.pinId} onClick={() => {
-                    this.changePin(settings.colours, () => {
-                        actualGuess[this.props.pinIndex] = this.state.pinId
-                        changeGuess(actualGuess)
-                    })
+                {({ actualGuess, changeGuess, settings }) => (
+                    <details
+                        open={this.state.opened}
+                        onClick={(e: any) => {
+                            this.setState((prevState) => ({ opened: !prevState.opened }));
+                            e.preventDefault()
+                        }}>
+                        <summary>
+                            <HugePin pinId={this.state.pinId}></HugePin>
+                        </summary>
+                        <div className="pinselector">
+                            {Array.from({ length: settings.colours }).map((_, selectablePin) => (
+                                <HugePin
+                                    key={`${this.props.pinId}-${selectablePin}`}
+                                    pinId={selectablePin}
+                                    onClick={() => this.selectPin(selectablePin, actualGuess, changeGuess)}>
+                                </HugePin>))
+                            }
+                        </div>
+                    </details>)
                 }
-            }></HugePin>
-            )}
-          </GameContext.Consumer>
+            </GameContext.Consumer>
 
         )
     }
@@ -44,4 +58,4 @@ class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
 
 HugeColorSelectorPin.contextType = GameContext;
 
-export {HugeColorSelectorPin};
+export { HugeColorSelectorPin };

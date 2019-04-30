@@ -17,13 +17,14 @@ export const emptyGuess = Array.from({length: defaultSettings.pins}, () => NEUTR
 export const defaultGameContext: GameContextType = {
     id: "",
     settings: defaultSettings,
-    actualGuess: emptyGuess,
+    actualGuess: emptyGuess.map(e=>e),
     actualLine: 0,
     changeGuess: (guess: number[]) => {
         defaultGameContext.actualGuess = guess
     },
     nextLine: () => {
         defaultGameContext.actualLine++
+        defaultGameContext.actualGuess = emptyGuess.map(e=>e)
     },
     setId: (id: string) => {
         defaultGameContext.id = id;
