@@ -2,6 +2,8 @@
 
 A simple classic logic puzzle board game implementation.
 
+[DEMO](http://matytermind.herokuapp.com)
+
 ## Dev
 
 ```bash
