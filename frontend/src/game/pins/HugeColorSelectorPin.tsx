@@ -4,19 +4,19 @@ import { GameContext } from '../context/GameContext';
 
 type HCSPState = {
     pinId: number,
-    opened: boolean,
 };
 
 type HCSPProps = {
     pinId: number,
     pinIndex: number,
+    open: boolean,
+    changeSelector: (i: number) => void,
 }
 class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
     constructor(props: HCSPProps) {
         super(props);
         this.state = {
-            pinId: props.pinId,
-            opened: false
+            pinId: props.pinId
         }
     }
 
@@ -31,9 +31,9 @@ class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
             <GameContext.Consumer>
                 {({ actualGuess, changeGuess, settings }) => (
                     <details
-                        open={this.state.opened}
+                        open={this.props.open}
                         onClick={(e: any) => {
-                            this.setState((prevState) => ({ opened: !prevState.opened }));
+                            this.props.changeSelector(this.props.pinIndex)
                             e.preventDefault()
                         }}>
                         <summary>
