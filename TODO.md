@@ -4,3 +4,4 @@
 * add api calls to a separate place
 * add docker
 * add creator info
+* reset game without page reload

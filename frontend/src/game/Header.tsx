@@ -14,12 +14,11 @@ function reloadPage() {
 
 const Header: React.FC<HeaderProps> = (props) => {
     const { isOver, lessLine, error, isLoaded } = props
-
     return (
         <div className="header">
             {(error) && (`Error: ${error.message}`)}
             {!isLoaded && (`Loading...`)}
-            {(isOver && lessLine) && (
+            {(isOver) && (
                 <div className="button" onClick={() => reloadPage()} >
                     Congratulations! <br />You won!<br />Do you want to play again?
                 </div>
@@ -32,5 +31,4 @@ const Header: React.FC<HeaderProps> = (props) => {
         </div>
     )
 }
-
 export { Header };
