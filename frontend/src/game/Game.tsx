@@ -116,22 +116,23 @@ class Game extends React.Component<{}, GameState> {
 
     render() {
         const { error, isLoaded } = this.state;
-        if (error) {
-            return <div className="header">Error: {error.message}</div>;
-        } else if (!isLoaded) {
-            return <div className="header">Loading...</div>;
-        } else {
-            return (
-                <div className="game">
-                    <Header lessLine={this.context.actualLine < this.context.settings.lines} isOver={this.state.isOver}>
-                        <div className="button" onClick={() => this.submitGuess()}>Submit</div>
-                    </Header>
+        return (
+            <div className="game">
+                <Header
+                    lessLine={this.context.actualLine < this.context.settings.lines}
+                    isOver={this.state.isOver}
+                    error={error}
+                    isLoaded={isLoaded}
+                >
+                    <div className="button" onClick={() => this.submitGuess()}>Submit</div>
+                </Header>
+                {(!error && isLoaded) && (
                     <div className="linecontainer">
                         {this.renderLines()}
                     </div>
-                </div>
-            )
-        }
+                )}
+            </div>
+        )
     }
 }
 
