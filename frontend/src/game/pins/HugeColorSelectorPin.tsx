@@ -44,6 +44,7 @@ class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
                                 <HugePin
                                     key={`${this.props.pinId}-${selectablePin}`}
                                     pinId={selectablePin}
+                                    marked={selectablePin === this.state.pinId}
                                     onClick={() => this.selectPin(selectablePin, actualGuess, changeGuess)}>
                                 </HugePin>))
                             }

@@ -12,6 +12,10 @@
     box-shadow: inset 4px 4px 10px 0px #555;
 }
 
+.line.actual .pinselector .hugepin.marked {
+    border-color: white;
+}
+
 .line.actual .hugepin {
     border-color: #969696;
 }
