@@ -1,12 +1,14 @@
-# Logic game
+# Matytermind
+
+A simple classic logic puzzle board game implementation.
 
 ## Dev
 
 ```bash
 npm start
 # open up a different shell:
-cd frontend;
-npm start
+npm run dev
+# the default browser will open and load up localhost:3000
 ```
 
 ## Deploying to Heroku
