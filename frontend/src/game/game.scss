@@ -25,8 +25,11 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
-  }
+}
 
-  .linecontainer {
-      margin-top: 20px;
-  }
+.linecontainer {
+    margin-top: 20px;
+    padding: 5px;
+    background-color: gray;
+    border-radius: 20px;
+}

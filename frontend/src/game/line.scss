@@ -7,9 +7,7 @@ $small-container: $small-size * 2 + 2px;
 .line {
     display: flex;
     align-items: center;
-    width: 100%;
-    border: 5px solid $game-back-color;
-    background-color: $game-back-color;
+    padding: 5px;
 }
 
 .playarea {
