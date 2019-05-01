@@ -8,6 +8,7 @@ type LineProps = {
   pins: number[],
   results: number[],
   actual: boolean,
+  actionButton: JSX.Element,
 };
 
 const Line: React.FC<LineProps> = (props) => {
@@ -23,7 +24,11 @@ const Line: React.FC<LineProps> = (props) => {
         }
       </div>
       <div className="results">
-        {props.results.map((pin, index) => (<SmallPin pinId={pin} key={`${index}-${pin}`}></SmallPin>))}
+        {props.actual ?
+          (<div className="submit">{props.actionButton}</div>)
+          :
+          (<div className="sent">{props.results.map((pin, index) => (<SmallPin pinId={pin} key={`${index}-${pin}`}></SmallPin>))}</div>)
+        }
       </div>
     </div>
   );

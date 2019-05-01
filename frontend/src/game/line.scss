@@ -26,21 +26,28 @@ $small-container: $small-size * 2 + 2px;
 }
 
 .results {
+    margin-left: 30px;
+}
+
+.results .sent {
     list-style-type: none;
     display: grid;
     grid-template-rows: $small-container $small-container;
     grid-gap: 5px;
-    margin-left: 30px;
     grid-auto-flow: column;
     align-items: center;
     justify-content: center;
 }
 
-.results .pin {
+.results .sent .pin {
     border: 1px solid black;
     width: $small-size;
     height: $small-size;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.results .submit .button {
+    margin: 0;
 }

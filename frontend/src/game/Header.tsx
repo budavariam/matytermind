@@ -4,9 +4,8 @@ import "./header.scss";
 type HeaderProps = {
     lessLine: boolean,
     isOver: boolean,
-    children: JSX.Element;
     isLoaded: boolean;
-    error: {message: string} | null;
+    error: { message: string } | null;
 };
 
 function reloadPage() {
@@ -14,7 +13,7 @@ function reloadPage() {
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
-    const { isOver, lessLine, children, error, isLoaded } = props
+    const { isOver, lessLine, error, isLoaded } = props
 
     return (
         <div className="header">
@@ -22,16 +21,13 @@ const Header: React.FC<HeaderProps> = (props) => {
             {!isLoaded && (`Loading...`)}
             {(isOver && lessLine) && (
                 <div className="button" onClick={() => reloadPage()} >
-                    Play again?
+                    Congratulations! <br />You won!<br />Do you want to play again?
                 </div>
             )}
             {(!isOver && !lessLine) && (
                 <div className="button" onClick={() => reloadPage()}>
-                    Try again?
+                    You lost :( <br />Do you want to try again?
                 </div>
-            )}
-            {(!isOver) && (
-                children
             )}
         </div>
     )

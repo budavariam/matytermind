@@ -15,7 +15,7 @@
     padding: 10px;
     background-color: gray;
     user-select: none;
-    border-color: 1px solid black;
+    border: 1px solid black;
 }
 
 .header {
@@ -27,6 +27,6 @@
     color: white;
   }
 
-.linecontainer {
-    margin-top: 70px;
-}
+  .linecontainer {
+      margin-top: 20px;
+  }

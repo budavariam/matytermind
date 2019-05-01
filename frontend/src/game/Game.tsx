@@ -108,9 +108,15 @@ class Game extends React.Component<{}, GameState> {
         return Array.from({ length: settings.lines }, () => emptyLine)
     }
 
-    renderLines() {
+    renderLines(submitButton: JSX.Element) {
         return this.state.lines.map((line: any, index: number) =>
-            (<Line key={index} pins={line.guess} results={line.result} actual={(!this.state.isOver) && (index === this.context.actualLine)}></Line>)
+            (<Line
+                key={index}
+                pins={line.guess}
+                results={line.result}
+                actual={(!this.state.isOver) && (index === this.context.actualLine)}
+                actionButton={submitButton}>
+            </Line>)
         )
     }
 
@@ -124,11 +130,10 @@ class Game extends React.Component<{}, GameState> {
                     error={error}
                     isLoaded={isLoaded}
                 >
-                    <div className="button" onClick={() => this.submitGuess()}>Submit</div>
                 </Header>
                 {(!error && isLoaded) && (
                     <div className="linecontainer">
-                        {this.renderLines()}
+                        {this.renderLines((<div className="button" onClick={() => this.submitGuess()}>OK</div>))}
                     </div>
                 )}
             </div>
