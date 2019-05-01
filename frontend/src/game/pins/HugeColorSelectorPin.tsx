@@ -1,6 +1,7 @@
 import React from 'react';
 import { HugePin } from './HugePin';
 import { GameContext } from '../context/GameContext';
+import "./colorselector.scss";
 
 type HCSPState = {
     pinId: number,

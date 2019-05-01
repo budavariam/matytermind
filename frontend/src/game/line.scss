@@ -50,3 +50,11 @@ $small-container: $small-size * 2 + 2px;
 .results .submit .button {
     margin: 0;
 }
+
+.line.actual .playarea .pin {
+    border-color: #969696;
+}
+
+.line.actual .pinselector .pin.marked {
+    border-color: white;
+}

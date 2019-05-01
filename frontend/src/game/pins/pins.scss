@@ -1,3 +1,20 @@
+$pins: (
+    smallpin-1: black,
+    smallpin-2: white,
+    hugepin-0: purple,
+    hugepin-1: green,
+    hugepin-2: blue,
+    hugepin-3: white,
+    hugepin-4: yellow,
+    hugepin-5: red,
+);
+
+@each $name, $colour in $pins {
+  .#{$name} {
+    background-color: $colour;
+  }
+}
+
 .pin {
     border-radius: 50%;
     border: 1px solid black;
@@ -12,38 +29,6 @@
     box-shadow: inset 4px 4px 10px 0px #555;
 }
 
-.line.actual .pinselector .hugepin.marked {
-    border-color: white;
-}
-
-.line.actual .hugepin {
-    border-color: #969696;
-}
-
-.hugepin-0 {
-    background-color: purple;
-}
-
-.hugepin-1 {
-    background-color: green;
-}
-
-.hugepin-2 {
-    background-color: blue;
-}
-
-.hugepin-3 {
-    background-color: white;
-}
-
-.hugepin-4 {
-    background-color: yellow;
-}
-
-.hugepin-5 {
-    background-color: red;
-}
-
 .smallpin {
     padding: 5px;
     box-shadow: inset -2px -2px 4px 0px #555
@@ -51,34 +36,4 @@
 
 .pin.smallpin-0 {
     box-shadow: inset 2px 2px 4px 0px #555;
-}
-
-.smallpin-1 {
-    background-color: black;
-}
-
-.smallpin-2 {
-    background-color: white;
-}
-
-summary::-webkit-details-marker {
-    display: none;
-}
-
-summary:focus {
-    outline-color: #666;
-    outline-width: 4px;
-    outline-style: solid;
-}
-
-.pinselector {
-    position: absolute;
-    background: #969696;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 5px;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: 50% 50%;
-    grid-gap: 5px;
 }

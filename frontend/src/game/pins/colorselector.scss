@@ -1,0 +1,21 @@
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary:focus {
+    outline-color: #666;
+    outline-width: 4px;
+    outline-style: solid;
+}
+
+.pinselector {
+    position: absolute;
+    background: #969696;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: 50% 50%;
+    grid-gap: 5px;
+}

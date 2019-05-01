@@ -8,3 +8,4 @@ Ideas to practice and/or place to improve:
 * reset game without page reload
 * naviagate with keyboard
 * add gameplay info
+* show error on missing field
