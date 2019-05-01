@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     const { isOver, lessLine, error, isLoaded } = props
     return (
         <div className="header">
-            {(error) && (`Error: ${error.message}`)}
+            {(error) && (`${error.message}`)}
             {!isLoaded && (`Loading...`)}
             {(isOver) && (
                 <div className="button" onClick={() => reloadPage()} >

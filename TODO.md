@@ -6,6 +6,5 @@ Ideas to practice and/or place to improve:
 * add api calls to a separate place
 * add docker
 * reset game without page reload
-* naviagate with keyboard
+* navigate with keyboard
 * add gameplay info
-* show error on missing field

@@ -66,7 +66,9 @@ class Game extends React.Component<{}, GameState> {
 
     submitGuess() {
         if (this.context.actualGuess.some((el: number) => el < 0 || el > this.context.settings.colours)) {
-            console.error("Invalid data!")
+            this.setState({
+                error: { message: "Please fill each slot!" },
+            });
         } else {
             fetch('/api/guess', {
                 method: 'POST',
@@ -86,6 +88,7 @@ class Game extends React.Component<{}, GameState> {
                                 return {
                                     isOver: result.isOver,
                                     lines: this.setLineFromResponse(state.lines, result),
+                                    error: null
                                 }
                             });
                         }
@@ -132,7 +135,7 @@ class Game extends React.Component<{}, GameState> {
                     isLoaded={isLoaded}
                 >
                 </Header>
-                {(!error && isLoaded) && (
+                {(isLoaded) && (
                     <div className="linecontainer">
                         {this.renderLines((<div className="button" onClick={() => this.submitGuess()}>OK</div>))}
                     </div>
