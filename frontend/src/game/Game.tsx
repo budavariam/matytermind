@@ -3,6 +3,7 @@ import { Line } from './Line';
 import { GameResponse, GameSettings } from './types';
 import { GameContext, defaultSettings, emptyGuess, GOODGUESSPINID, GOODCOLOURPINID, NEUTRALSMALLPIN } from './context/GameContext';
 import "./game.scss";
+import { Header } from './Header';
 
 type GameState = {
     error: { message: string } | null,
@@ -21,7 +22,6 @@ class Game extends React.Component<{}, GameState> {
             isOver: false,
         };
     }
-
 
     componentDidMount() {
         fetch("/api/start")
@@ -123,19 +123,9 @@ class Game extends React.Component<{}, GameState> {
         } else {
             return (
                 <div className="game">
-                    <div className="header">
-                        {(this.state.isOver && this.context.actualLine < this.context.settings.lines) && (
-                            <div className="button" onClick={() => { window.location.reload(); }} >Congratulations!<br />You won!<br />Do you want to play again?</div>
-                        )}
-                        {(!this.state.isOver && this.context.actualLine === this.context.settings.lines) && (
-                            <div className="button" onClick={() => { window.location.reload(); }}>You lost :( Try again?</div>
-                        )}
-                        {(!this.state.isOver && this.context.actualLine < this.context.settings.lines) && (
-                            <div className="button" onClick={
-                                () => this.submitGuess()
-                            }>Submit guess</div>)
-                        }
-                    </div>
+                    <Header lessLine={this.context.actualLine < this.context.settings.lines} isOver={this.state.isOver}>
+                        <div className="button" onClick={() => this.submitGuess()}>Submit</div>
+                    </Header>
                     <div className="linecontainer">
                         {this.renderLines()}
                     </div>
