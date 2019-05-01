@@ -4,9 +4,6 @@
  * @returns {{evaluation, isOver: boolean}}
  */
 function evaluateGuess(config, secret, guess) {
-    // get a map of the secret colours with the count of their elements
-    // count by comparison how many good guesses are there by order, decrease their numbers in the map
-    // then go through them one more time, and check if the number for that colour is greater than 0
     const goodGuess = secret.reduce(
         (acc, curr, index) => acc + ((curr === guess[index]) ? 1 : 0), 0
     )
