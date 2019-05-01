@@ -4,7 +4,7 @@
 }
 
 .hugepin {
-    padding: 20px;
+    padding: 5px;
     box-shadow: inset -3px -3px 10px 0px #000;
 }
 
@@ -66,8 +66,9 @@ summary::-webkit-details-marker {
     background: #969696;
     border: 1px solid black;
     border-radius: 5px;
-    padding: 10px;
+    padding: 5px;
     display: grid;
     grid-auto-flow: column;
-    grid-template-rows: 72px 72px;
+    grid-template-rows: 50% 50%;
+    grid-gap: 5px;
 }
