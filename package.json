@@ -1,7 +1,7 @@
 {
-  "name": "node-js-getting-started",
+  "name": "matytermind",
   "version": "0.0.1",
-  "description": "A sample Node.js app using Express 4",
+  "description": "A simple logic game implementation.",
   "engines": {
     "node": "10.x"
   },
@@ -9,6 +9,8 @@
   "scripts": {
     "start": "nodemon backend/index.js",
     "test": "mocha 'backend/spec/**/*.js'",
+    "dev": "cd frontend && npm start",
+    "buildfrontend": "cd frontend && npm install && npm run build",
     "heroku-postbuild": "cd frontend && npm install && npm run build && rm -rf ./node_modules/"
   },
   "dependencies": {
@@ -16,14 +18,12 @@
     "express": "^4.15.2",
     "uuid": "^3.3.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
-  },
   "keywords": [
     "node",
     "heroku",
-    "express"
+    "express",
+    "react",
+    "puzzle"
   ],
   "license": "MIT",
   "devDependencies": {

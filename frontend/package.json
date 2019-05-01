@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "matytermind-frontend",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.11",
