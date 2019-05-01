@@ -4,6 +4,7 @@ import { GameResponse, GameSettings } from './types';
 import { GameContext, defaultSettings, emptyGuess, GOODGUESSPINID, GOODCOLOURPINID, NEUTRALSMALLPIN } from './context/GameContext';
 import "./game.scss";
 import { Header } from './Header';
+import { Footer } from './Footer';
 
 type GameState = {
     error: { message: string } | null,
@@ -136,6 +137,7 @@ class Game extends React.Component<{}, GameState> {
                         {this.renderLines((<div className="button" onClick={() => this.submitGuess()}>OK</div>))}
                     </div>
                 )}
+                <Footer></Footer>
             </div>
         )
     }
