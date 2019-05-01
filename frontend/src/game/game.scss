@@ -11,9 +11,11 @@
 .button {
     border-radius: 10px;
     cursor: pointer;
-    margin: 20px;
-    padding: 30px;
+    margin: 10px;
+    padding: 10px;
     background-color: gray;
+    user-select: none;
+    border-color: 1px solid black;
 }
 
 .header {
@@ -24,3 +26,7 @@
     font-size: calc(10px + 2vmin);
     color: white;
   }
+
+.linecontainer {
+    margin-top: 70px;
+}

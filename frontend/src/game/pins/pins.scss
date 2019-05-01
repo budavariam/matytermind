@@ -61,6 +61,12 @@ summary::-webkit-details-marker {
     display: none;
 }
 
+summary:focus {
+    outline-color: #666;
+    outline-width: 4px;
+    outline-style: solid;
+}
+
 .pinselector {
     position: absolute;
     background: #969696;

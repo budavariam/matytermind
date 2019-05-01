@@ -18,16 +18,16 @@ const Header: React.FC<HeaderProps> = (props) => {
 
     return (
         <div className="header">
-            {(error) && (<div className="header">Error: {error.message}</div>)}
-            {!isLoaded && (<div className="header">Loading...</div>)}
+            {(error) && (`Error: ${error.message}`)}
+            {!isLoaded && (`Loading...`)}
             {(isOver && lessLine) && (
                 <div className="button" onClick={() => reloadPage()} >
-                    Congratulations!<br />You won!<br />Do you want to play again?
+                    Play again?
                 </div>
             )}
             {(!isOver && !lessLine) && (
                 <div className="button" onClick={() => reloadPage()}>
-                    You lost :( Try again?
+                    Try again?
                 </div>
             )}
             {(!isOver) && (
