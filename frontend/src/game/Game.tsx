@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from './Line';
-import { GameResponse, GameSettings } from './types';
+import { GameResponse, GameSettings, LineType } from './types';
 import { GameContext, defaultSettings, emptyGuess, GOODGUESSPINID, GOODCOLOURPINID, NEUTRALSMALLPIN } from './context/GameContext';
 import "./game.scss";
 import { Header } from './Header';
@@ -9,7 +9,7 @@ import { Footer } from './Footer';
 type GameState = {
     error: { message: string } | null,
     isLoaded: boolean,
-    lines: any[],
+    lines: LineType[],
     isOver: boolean,
 };
 
@@ -45,7 +45,7 @@ class Game extends React.Component<{}, GameState> {
             )
     }
 
-    setLineFromResponse(lines: any[], data: GameResponse): any[] {
+    setLineFromResponse(lines: LineType[], data: GameResponse): LineType[] {
         const evaluation = []
         for (let i = 0; i < data.goodGuess; i++) {
             evaluation.push(GOODGUESSPINID)
@@ -104,7 +104,7 @@ class Game extends React.Component<{}, GameState> {
         }
     }
 
-    generateLines(settings: GameSettings) {
+    generateLines(settings: GameSettings): LineType[] {
         const emptyLine = {
             guess: emptyGuess.map(e => e),
             result: Array.from({ length: settings.pins }, () => NEUTRALSMALLPIN),
@@ -113,7 +113,7 @@ class Game extends React.Component<{}, GameState> {
     }
 
     renderLines(submitButton: JSX.Element) {
-        return this.state.lines.map((line: any, index: number) =>
+        return this.state.lines.map((line: LineType, index: number) =>
             (<Line
                 key={index}
                 pins={line.guess}

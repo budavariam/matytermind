@@ -33,7 +33,7 @@ class HugeColorSelectorPin extends React.Component<HCSPProps, HCSPState> {
                 {({ actualGuess, changeGuess, settings }) => (
                     <details
                         open={this.props.open}
-                        onClick={(e: any) => {
+                        onClick={(e: React.MouseEvent) => {
                             this.props.changeSelector(this.props.pinIndex)
                             e.preventDefault()
                         }}>

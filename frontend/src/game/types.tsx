@@ -20,3 +20,8 @@ export type GameContextType = {
     nextLine: () => void,
     setId: (id: string) => void,
 }
+
+export type LineType = {
+    guess: number[],
+    result: number[],
+}
