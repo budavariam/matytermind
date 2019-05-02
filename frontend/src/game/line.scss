@@ -3,6 +3,7 @@
 $small-size: 10px;
 $huge-size: 30px;
 $small-container: $small-size * 2 + 2px;
+$horizontal-gap: 30px;
 
 .line {
     display: flex;
@@ -11,20 +12,22 @@ $small-container: $small-size * 2 + 2px;
 }
 
 .playarea {
-    list-style-type: none;
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 10px;
 }
 
 .playarea .pin {
-    border: 1px solid black;
     width: $huge-size;
     height: $huge-size;
-    margin: 0 5px;
+}
+
+.actual .pin {
+    border-color: #969696;
 }
 
 .results {
-    margin-left: 30px;
+    margin-left: $horizontal-gap;
     width: 100%;
 }
 
@@ -39,22 +42,9 @@ $small-container: $small-size * 2 + 2px;
 }
 
 .results .sent .pin {
-    border: 1px solid black;
     width: $small-size;
     height: $small-size;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.results .submit .button {
-    margin: 0;
-}
-
-.line.actual .playarea .pin {
-    border-color: #969696;
-}
-
-.line.actual .pinselector .pin.marked {
-    border-color: white;
 }

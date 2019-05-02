@@ -37,3 +37,7 @@ $pins: (
 .pin.smallpin-0 {
     box-shadow: inset 2px 2px 4px 0px #555;
 }
+
+.pin.hugepin.marked {
+    border-color: white;
+}
