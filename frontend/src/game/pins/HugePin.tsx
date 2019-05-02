@@ -7,15 +7,9 @@ type HugePinProps = {
     onClick?: () => void,
 };
 
-function getIconForPinId(id: number) {
-    return "";
-}
-
 const HugePin: React.FC<HugePinProps> = (props) => {
   return (
-    <div className={`pin hugepin hugepin-${props.pinId} ${props.marked ? "marked" : ""}`} onClick={props.onClick}>
-        {getIconForPinId(props.pinId)}
-    </div>
+    <div className={`pin hugepin hugepin-${props.pinId} ${props.marked ? "marked" : ""}`} onClick={props.onClick}></div>
   );
 }
 
