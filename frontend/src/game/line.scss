@@ -3,6 +3,7 @@
 $small-size: 10px;
 $huge-size: 30px;
 $small-container: $small-size * 2 + 2px;
+$small-gap: 5px;
 
 .line {
     display: grid;
@@ -25,14 +26,23 @@ $small-container: $small-size * 2 + 2px;
 }
 
 .actual .pin {
-    border-color: #969696;
+    border-color: $selected-color;
+}
+
+.results {
+    $result-size: ($small-container * 2) + $small-gap;
+    width: $result-size;
+    height: $result-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .results .sent {
     list-style-type: none;
     display: grid;
     grid-template-rows: $small-container $small-container;
-    grid-gap: 5px;
+    grid-gap: $small-gap;
     grid-auto-flow: column;
     align-items: center;
     justify-content: center;
@@ -44,4 +54,21 @@ $small-container: $small-size * 2 + 2px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.spinner {
+    pointer-events: none;
+    width: 25px;
+    height: 25px;
+    border: 5px solid transparent;
+    border-color: $selected-color;
+    border-top-color: $game-back-color;
+    border-radius: 50%;
+    animation: loadingspin 1s linear infinite;
+}
+
+@keyframes loadingspin {
+    100% {
+        transform: rotate(360deg)
+    }
 }

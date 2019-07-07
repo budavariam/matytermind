@@ -11,6 +11,7 @@ type GameState = {
     isLoaded: boolean,
     lines: LineType[],
     isOver: boolean,
+    submitInProgress: boolean,
 };
 
 class Game extends React.Component<{}, GameState> {
@@ -19,6 +20,7 @@ class Game extends React.Component<{}, GameState> {
         this.state = {
             error: null,
             isLoaded: false,
+            submitInProgress: false,
             lines: this.generateLines(defaultSettings),
             isOver: false,
         };
@@ -69,8 +71,10 @@ class Game extends React.Component<{}, GameState> {
             this.setState({
                 error: { message: "Please fill each slot!" },
             });
-        } else {
-            fetch('/api/guess', {
+        } else if (!this.state.submitInProgress) {
+            this.setState({
+                submitInProgress: true,
+            }, () => fetch('/api/guess', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -101,6 +105,8 @@ class Game extends React.Component<{}, GameState> {
                         });
                     }
                 )
+                .then(() => this.setState({ submitInProgress: false }))
+            );
         }
     }
 
@@ -125,7 +131,9 @@ class Game extends React.Component<{}, GameState> {
     }
 
     render() {
-        const { error, isLoaded } = this.state;
+        const { error, isLoaded, submitInProgress } = this.state;
+        const submitButton = (<div className="button" onClick={() => this.submitGuess()}>OK</div>)
+        const waitingForResponse = (<div className="spinner"></div>)
         return (
             <div className="game">
                 <Header
@@ -137,7 +145,7 @@ class Game extends React.Component<{}, GameState> {
                 </Header>
                 {(isLoaded) && (
                     <div className="linecontainer">
-                        {this.renderLines((<div className="button" onClick={() => this.submitGuess()}>OK</div>))}
+                        {this.renderLines(submitInProgress ? waitingForResponse : submitButton)}
                     </div>
                 )}
                 <Footer></Footer>
