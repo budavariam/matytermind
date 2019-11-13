@@ -16,6 +16,6 @@ summary:focus {
     padding: 5px;
     display: grid;
     grid-auto-flow: column;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 1fr 1fr;
     grid-gap: 5px;
 }
