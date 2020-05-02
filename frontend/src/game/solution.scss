@@ -1,0 +1,14 @@
+@import "../style.scss";
+
+.solution {
+    border: 1px solid black;
+    border-radius: 10px;
+
+    &.hidden-solution {
+        background-color: darken($game-back-color, 10%);
+
+        * {
+            visibility: hidden;
+        }
+    }
+}

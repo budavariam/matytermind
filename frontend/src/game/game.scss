@@ -1,4 +1,4 @@
-@import "../style";
+@import "../style.scss";
 
 .game {
     display: flex;
@@ -12,7 +12,7 @@
     user-select: none;
     border-radius: 10px;
     padding: 10px;
-    background-color: gray;
+    background-color: $game-back-color;
     border: 1px solid black;
 }
 
@@ -24,10 +24,4 @@
     font-size: calc(10px + 2vmin);
     color: white;
     margin: 10px;
-}
-
-.linecontainer {
-    padding: 5px;
-    background-color: gray;
-    border-radius: 20px;
 }

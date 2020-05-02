@@ -1,0 +1,15 @@
+@import "../style.scss";
+
+$huge-size: 30px;
+
+.guess {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 10px;
+    padding: 5px 5px;
+}
+
+.guess .pin {
+    width: $huge-size;
+    height: $huge-size;
+}

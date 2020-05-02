@@ -1,8 +1,9 @@
 export type GameResponse = {
     goodGuess: number,
     goodColour: number,
-    isOver: boolean,
+    playerWon: boolean,
     message?:string,
+    solution?: number[],
 }
 
 export type GameSettings = {

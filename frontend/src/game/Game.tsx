@@ -1,18 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Line } from './Line';
+import React, { useEffect, useContext, useReducer } from 'react';
 import { GameResponse, GameSettings, LineType } from './types';
 import { GameContext, defaultSettings, emptyGuess, GOODGUESSPINID, GOODCOLOURPINID, NEUTRALSMALLPIN } from './context/GameContext';
 import "./game.scss";
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { PlayArea } from './PlayArea';
 
 type GameState = {
     error: { message: string } | null,
     isLoaded: boolean,
     lines: LineType[],
-    isOver: boolean,
+    playerWon: boolean,
+    solution: null | number[],
     submitInProgress: boolean,
 };
+
+type GameStateAction = (
+    { type: "LOADED", isLoaded: boolean, error?: { message: string } | null }
+    | { type: "ERROR", }
+    | { type: "SUBMITING", submitInProgress: boolean }
+    | { type: "NEXT_STEP", playerWon: boolean, lines: LineType[], solution: number[] | null, error: null });
 
 const Game: React.FC<{}> = () => {
     const context = useContext(GameContext)
@@ -25,12 +32,18 @@ const Game: React.FC<{}> = () => {
         return Array.from({ length: settings.lines }, () => emptyLine)
     }
 
-    const [state, setState] = useState<GameState>({
+    const [state, setState] = useReducer((prevState: GameState, action: GameStateAction): GameState => {
+        return {
+            ...prevState,
+            ...action
+        }
+    }, {
         error: null,
         isLoaded: false,
         submitInProgress: false,
         lines: generateLines(defaultSettings),
-        isOver: false,
+        playerWon: false,
+        solution: null,
     })
 
 
@@ -41,15 +54,14 @@ const Game: React.FC<{}> = () => {
                 (result) => {
                     context.setId(result.id)
                     setState({
-                        ...state,
-                        isOver: result.isOver,
+                        type: "LOADED",
                         isLoaded: true,
                     });
                 },
                 (error) => {
                     console.error(error)
                     setState({
-                        ...state,
+                        type: "LOADED",
                         isLoaded: true,
                         error: { message: "There was an error during server request, sorry for the inconvenience :(" },
                     });
@@ -81,12 +93,13 @@ const Game: React.FC<{}> = () => {
     const submitGuess = () => {
         if (context.actualGuess.some((el: number) => el < 0 || el > context.settings.colours)) {
             setState({
-                ...state,
+                type: "LOADED",
+                isLoaded: true,
                 error: { message: "Please fill each slot!" },
             });
         } else {
             setState({
-                ...state,
+                type: "SUBMITING",
                 submitInProgress: true,
             })
             fetch('/api/guess', {
@@ -102,14 +115,16 @@ const Game: React.FC<{}> = () => {
                     (result: GameResponse) => {
                         if (result.message) {
                             setState({
-                                ...state,
+                                type: "LOADED",
+                                isLoaded: true,
                                 error: { message: result.message }
                             });
                         } else {
                             setState({
-                                ...state,
-                                isOver: result.isOver,
+                                type: "NEXT_STEP",
+                                playerWon: result.playerWon,
                                 lines: setLineFromResponse(state.lines, result),
+                                solution: result.solution ? result.solution : null,
                                 error: null
                             });
                         }
@@ -117,46 +132,38 @@ const Game: React.FC<{}> = () => {
                     (error) => {
                         console.error(error)
                         setState({
-                            ...state,
+                            type: "LOADED",
                             isLoaded: true,
                             error: { message: "There was an error during server request, sorry for the inconvenience :(" },
                         });
                     }
                 )
-                .then(() => setState({ ...state, submitInProgress: false }))
+                .then(() => setState({ type: "SUBMITING", submitInProgress: false }))
         }
-    }
-
-    const renderLines = (submitButton: JSX.Element) => {
-        return state.lines.map((line: LineType, index: number) =>
-            (<Line
-                key={index}
-                pins={line.guess}
-                results={line.result}
-                actual={(!state.isOver) && (index === context.actualLine)}
-                actionButton={submitButton}>
-            </Line>)
-        )
     }
 
     const { error, isLoaded, submitInProgress } = state;
     const submitButton = (<div className="button" onClick={() => submitGuess()}>OK</div>)
     const waitingForResponse = (<div className="spinner"></div>)
+    const lessLine = context.actualLine < context.settings.lines
     return (
         <div className="game">
             <Header
-                lessLine={context.actualLine < context.settings.lines}
-                isOver={state.isOver}
+                lessLine={lessLine}
+                playerWon={state.playerWon}
                 error={error}
                 isLoaded={isLoaded}
-            >
-            </Header>
+            />
             {(isLoaded) && (
-                <div className="linecontainer">
-                    {renderLines(submitInProgress ? waitingForResponse : submitButton)}
-                </div>
+                <PlayArea
+                    submitButton={(submitInProgress ? waitingForResponse : submitButton)}
+                    lines={state.lines}
+                    isOver={state.playerWon || (!state.playerWon && !lessLine)}
+                    solution={state.solution}
+                    actualLine={context.actualLine}
+                />
             )}
-            <Footer></Footer>
+            <Footer />
         </div>
     )
 }
