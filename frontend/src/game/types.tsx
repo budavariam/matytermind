@@ -1,8 +1,9 @@
 export type GameResponse = {
     goodGuess: number,
     goodColour: number,
-    isOver: boolean,
+    playerWon: boolean,
     message?:string,
+    solution?: number[],
 }
 
 export type GameSettings = {
@@ -11,17 +12,22 @@ export type GameSettings = {
     lines: number,
 }
 
+export type GuessType = number[]
+
 export type GameContextType = {
     id: string,
     settings: GameSettings,
-    actualGuess: number[],
+    actualGuess: GuessType,
     actualLine: number,
-    changeGuess: (actualGuess: number[]) => void,
+    changeGuess: (actualGuess: GuessType) => void,
     nextLine: () => void,
     setId: (id: string) => void,
 }
 
 export type LineType = {
-    guess: number[],
-    result: number[],
+    guess: GuessType,
+    result: GuessType,
 }
+
+export type SolutionType = null | GuessType
+export type ErrorType = { message: string } | null

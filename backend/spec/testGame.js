@@ -16,7 +16,7 @@ describe('generateSequence()', function () {
 });
 
 describe('evaluateGuess()', function () {
-  describe('isOver', function () {
+  describe('playerWon', function () {
     const testData = [
       { guess: [1, 2, 3, 4], secret: [1, 2, 3, 4], expect: true },
       { guess: [2, 3, 4, 4], secret: [2, 3, 4, 4], expect: true },
@@ -28,7 +28,7 @@ describe('evaluateGuess()', function () {
     testData.forEach(function (test) {
       it(`should indicate that the match is ${test.expect ? "not " : " "}over for ${test.secret} & ${test.guess} `, function () {
         const result = game.evaluateGuess(config, test.secret, test.guess)
-        expect(result.isOver).to.be.equal(test.expect);
+        expect(result.playerWon).to.be.equal(test.expect);
       });
     })
   })
@@ -71,15 +71,15 @@ describe('evaluateGuess()', function () {
 
   describe('good overall response', function () {
     const testData = [
-      { secret: [2, 2, 2, 1], guess: [1, 2, 1, 1], expectGood: 2, expectColor: 0, expectOver: false },
-      { secret: [2, 2, 2, 1], guess: [1, 2, 1, 2], expectGood: 1, expectColor: 2, expectOver: false },
-      { secret: [2, 2, 2, 1], guess: [2, 1, 2, 1], expectGood: 3, expectColor: 0, expectOver: false },
-      { secret: [2, 2, 2, 1], guess: [2, 1, 1, 1], expectGood: 2, expectColor: 0, expectOver: false },
-      { secret: [2, 2, 2, 1], guess: [1, 2, 2, 1], expectGood: 3, expectColor: 0, expectOver: false },
-      { secret: [2, 2, 2, 1], guess: [1, 2, 2, 2], expectGood: 2, expectColor: 2, expectOver: false },
-      { secret: [2, 2, 2, 1], guess: [2, 2, 2, 2], expectGood: 3, expectColor: 0, expectOver: false },
-      { secret: [2, 2, 2, 1], guess: [1, 1, 1, 1], expectGood: 1, expectColor: 0, expectOver: false },
-      { secret: [2, 2, 2, 1], guess: [2, 2, 2, 1], expectGood: 4, expectColor: 0, expectOver: true },
+      { secret: [2, 2, 2, 1], guess: [1, 2, 1, 1], expectGood: 2, expectColor: 0, expectPlayerWon: false },
+      { secret: [2, 2, 2, 1], guess: [1, 2, 1, 2], expectGood: 1, expectColor: 2, expectPlayerWon: false },
+      { secret: [2, 2, 2, 1], guess: [2, 1, 2, 1], expectGood: 3, expectColor: 0, expectPlayerWon: false },
+      { secret: [2, 2, 2, 1], guess: [2, 1, 1, 1], expectGood: 2, expectColor: 0, expectPlayerWon: false },
+      { secret: [2, 2, 2, 1], guess: [1, 2, 2, 1], expectGood: 3, expectColor: 0, expectPlayerWon: false },
+      { secret: [2, 2, 2, 1], guess: [1, 2, 2, 2], expectGood: 2, expectColor: 2, expectPlayerWon: false },
+      { secret: [2, 2, 2, 1], guess: [2, 2, 2, 2], expectGood: 3, expectColor: 0, expectPlayerWon: false },
+      { secret: [2, 2, 2, 1], guess: [1, 1, 1, 1], expectGood: 1, expectColor: 0, expectPlayerWon: false },
+      { secret: [2, 2, 2, 1], guess: [2, 2, 2, 1], expectGood: 4, expectColor: 0, expectPlayerWon: true },
     ]
 
     testData.forEach(function (test) {
@@ -87,7 +87,7 @@ describe('evaluateGuess()', function () {
         const result = game.evaluateGuess(config, test.secret, test.guess)
         expect(result.goodGuess).to.be.equal(test.expectGood);
         expect(result.goodColour).to.be.equal(test.expectColor);
-        expect(result.isOver).to.be.equal(test.expectOver);
+        expect(result.playerWon).to.be.equal(test.expectPlayerWon);
       });
     });
   });

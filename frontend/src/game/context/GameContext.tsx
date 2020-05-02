@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameContextType } from '../types';
+import { GameContextType, GuessType } from '../types';
 
 export const defaultSettings = {
     pins: 4,
@@ -19,7 +19,7 @@ export const defaultGameContext: GameContextType = {
     settings: defaultSettings,
     actualGuess: emptyGuess.map(e=>e),
     actualLine: 0,
-    changeGuess: (guess: number[]) => {
+    changeGuess: (guess: GuessType) => {
         defaultGameContext.actualGuess = guess
     },
     nextLine: () => {
