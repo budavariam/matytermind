@@ -1,20 +1,20 @@
 /**
  * @param {number[]} secret
  * @param {number[]} guess
- * @returns {{evaluation, isOver: boolean}}
+ * @returns {{goodGuess, goodColour, playerWon: boolean}}
  */
 function evaluateGuess(config, secret, guess) {
     const goodGuess = secret.reduce(
         (acc, curr, index) => acc + ((curr === guess[index]) ? 1 : 0), 0
     )
-    const {guesslist: gcRemainingGuesses, secretHistogram: gcSecretHistogram} = guess
-        .map((value, index) => ({secretP: secret[index], guessP: value }))
+    const { guesslist: gcRemainingGuesses, secretHistogram: gcSecretHistogram } = guess
+        .map((value, index) => ({ secretP: secret[index], guessP: value }))
         .filter(p => p.guessP != p.secretP)
         .reduce((acc, curr) => {
             acc.secretHistogram[curr.secretP] = acc.secretHistogram[curr.secretP] ? (acc.secretHistogram[curr.secretP] + 1) : 1
             acc.guesslist.push(curr.guessP)
             return acc
-        }, {secretHistogram: {}, guesslist: []})
+        }, { secretHistogram: {}, guesslist: [] })
     const goodColour = gcRemainingGuesses.reduce((acc, curr) => {
         if (gcSecretHistogram[curr]) {
             acc++
@@ -22,11 +22,11 @@ function evaluateGuess(config, secret, guess) {
         }
         return acc
     }, 0)
-    const isOver = (goodGuess == config.gameSettings.pins)
+    const playerWon = (goodGuess == config.gameSettings.pins)
     return {
         goodGuess,
         goodColour,
-        isOver,
+        playerWon,
     }
 }
 
