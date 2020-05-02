@@ -143,8 +143,6 @@ const Game: React.FC<{}> = () => {
     }
 
     const { error, isLoaded, submitInProgress } = state;
-    const submitButton = (<div className="button" onClick={() => submitGuess()}>OK</div>)
-    const waitingForResponse = (<div className="spinner"></div>)
     const lessLine = context.actualLine < context.settings.lines
     return (
         <div className="game">
@@ -156,7 +154,8 @@ const Game: React.FC<{}> = () => {
             />
             {(isLoaded) && (
                 <PlayArea
-                    submitButton={(submitInProgress ? waitingForResponse : submitButton)}
+                    submitInProgress={submitInProgress}
+                    submitGuess={submitGuess}
                     lines={state.lines}
                     isOver={state.playerWon || (!state.playerWon && !lessLine)}
                     solution={state.solution}

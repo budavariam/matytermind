@@ -5,7 +5,8 @@ import { Line } from './Line';
 import { Solution } from './Solution';
 
 type PlayAreaProps = {
-  submitButton: JSX.Element,
+  submitInProgress: boolean,
+  submitGuess: () => void,
   lines: LineType[],
   isOver: boolean,
   actualLine: number,
@@ -20,8 +21,9 @@ const PlayArea: React.FC<PlayAreaProps> = (props: PlayAreaProps) => {
       pins={line.guess}
       results={line.result}
       actual={(!props.isOver) && (index === props.actualLine)}
-      actionButton={props.submitButton}>
-    </Line>)
+      submitInProgress={props.submitInProgress}
+      submitGuess={props.submitGuess}
+    />)
   )
   return (<div className="playarea">
     <Solution isOver={props.isOver} solution={props.solution} />

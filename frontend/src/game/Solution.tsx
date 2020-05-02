@@ -10,13 +10,13 @@ type SolutionProps = {
   solution: SolutionType,
 };
 
-const Solution: React.FC<SolutionProps> = (props: SolutionProps) => {
+const Solution: React.FC<SolutionProps> = React.memo((props: SolutionProps) => {
   return (<div className="line">
     <div className={`solution ${!props.isOver ? "hidden-solution" : ""}`}>
       <Guess pins={props.solution ? props.solution : emptyGuess.map(e => e)} actual={false} />
     </div>
     <div className="results"></div>
   </div>)
-}
+}, (pp, np) => pp.isOver === np.isOver)
 
 export { Solution }

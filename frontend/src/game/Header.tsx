@@ -12,7 +12,7 @@ function reloadPage() {
     window.location.reload();
 }
 
-const Header: React.FC<HeaderProps> = (props) => {
+const Header: React.FC<HeaderProps> = React.memo((props) => {
     const { playerWon, lessLine, error, isLoaded } = props
     return (
         <div className="header">
@@ -30,5 +30,11 @@ const Header: React.FC<HeaderProps> = (props) => {
             )}
         </div>
     )
-}
+}, (pp, np) => {
+    return (pp.playerWon === np.playerWon
+        && pp.lessLine === np.lessLine
+        && pp.isLoaded === np.isLoaded
+        && pp.error === np.error
+    )
+})
 export { Header };
