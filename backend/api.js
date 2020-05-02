@@ -57,9 +57,9 @@ function guess(req, res) {
     gameInstance.isOver = playerWon || noMoreLines
 
     console.log(id, games[id].secret, guess, goodGuess, goodColour, playerWon)
-    
+
     const response = { goodGuess, goodColour, playerWon }
-    if (noMoreLines) {
+    if (gameInstance.isOver) {
         response.solution = secret
     }
     res.send(response)
