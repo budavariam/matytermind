@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useReducer } from 'react';
-import { GameResponse, GameSettings, LineType } from './types';
+import { GameResponse, GameSettings, LineType, ErrorType, SolutionType } from './types';
 import { GameContext, defaultSettings, emptyGuess, GOODGUESSPINID, GOODCOLOURPINID, NEUTRALSMALLPIN } from './context/GameContext';
 import "./game.scss";
 import { Header } from './Header';
@@ -7,19 +7,19 @@ import { Footer } from './Footer';
 import { PlayArea } from './PlayArea';
 
 type GameState = {
-    error: { message: string } | null,
+    error: ErrorType,
     isLoaded: boolean,
     lines: LineType[],
     playerWon: boolean,
-    solution: null | number[],
+    solution: SolutionType,
     submitInProgress: boolean,
 };
 
 type GameStateAction = (
-    { type: "LOADED", isLoaded: boolean, error?: { message: string } | null }
+    { type: "LOADED", isLoaded: boolean, error?: ErrorType }
     | { type: "ERROR", }
     | { type: "SUBMITING", submitInProgress: boolean }
-    | { type: "NEXT_STEP", playerWon: boolean, lines: LineType[], solution: number[] | null, error: null });
+    | { type: "NEXT_STEP", playerWon: boolean, lines: LineType[], solution: SolutionType, error?: ErrorType });
 
 const Game: React.FC<{}> = () => {
     const context = useContext(GameContext)

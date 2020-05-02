@@ -3,10 +3,11 @@ import "./line.scss";
 import "./solution.scss";
 import { Guess } from './Guess';
 import { emptyGuess } from './context/GameContext';
+import { SolutionType } from './types';
 
 type SolutionProps = {
   isOver: boolean,
-  solution: number[] | null,
+  solution: SolutionType,
 };
 
 const Solution: React.FC<SolutionProps> = (props: SolutionProps) => {

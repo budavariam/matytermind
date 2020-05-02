@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { HugePin } from './HugePin';
 import { GameContext } from '../context/GameContext';
 import "./colorselector.scss";
+import { GuessType } from '../types';
 
 type HCSPState = {
     pinId: number,
@@ -18,7 +19,7 @@ const HugeColorSelectorPin: React.FC<HCSPProps> = (props: HCSPProps) => {
         pinId: props.pinId
     })
 
-    const selectPin = (selectablePin: number, actualGuess: number[], changeGuess: (g: number[]) => void) => {
+    const selectPin = (selectablePin: number, actualGuess: GuessType, changeGuess: (g: GuessType) => void) => {
         setState({ pinId: selectablePin })
         actualGuess[props.pinIndex] = selectablePin
         changeGuess(actualGuess)

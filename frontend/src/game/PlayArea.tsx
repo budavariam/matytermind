@@ -1,6 +1,6 @@
 import React from 'react';
 import "./playarea.scss";
-import { LineType } from './types';
+import { LineType, SolutionType } from './types';
 import { Line } from './Line';
 import { Solution } from './Solution';
 
@@ -9,7 +9,7 @@ type PlayAreaProps = {
   lines: LineType[],
   isOver: boolean,
   actualLine: number,
-  solution: number[] | null,
+  solution: SolutionType,
 };
 
 

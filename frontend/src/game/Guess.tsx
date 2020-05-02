@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './guess.scss';
 import { HugeColorSelectorPin } from './pins/HugeColorSelectorPin';
 import { HugePin } from './pins/HugePin';
+import { GuessType } from './types';
 
 type GuessProps = {
     actual: boolean,
-    pins: number[],
+    pins: GuessType,
 };
 
 type GuessState = {

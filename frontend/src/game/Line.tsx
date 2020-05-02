@@ -2,10 +2,11 @@ import React from 'react';
 import { SmallPin } from './pins/SmallPin';
 import "./line.scss";
 import { Guess } from './Guess';
+import { GuessType } from './types';
 
 type LineProps = {
-  pins: number[],
-  results: number[],
+  pins: GuessType,
+  results: GuessType,
   actual: boolean,
   actionButton: JSX.Element,
 };
