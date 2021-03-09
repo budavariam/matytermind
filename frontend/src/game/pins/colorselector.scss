@@ -1,7 +1,7 @@
 @import "src/style";
 
-summary::-webkit-details-marker {
-    display: none;
+summary {
+    list-style-type: none;
 }
 
 summary:focus {
