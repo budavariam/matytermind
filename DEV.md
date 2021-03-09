@@ -13,6 +13,7 @@ npm run dev
 
 ```bash
 heroku login
+# heroku git:remote -a matytermind
 git push heroku master
 heroku open
 ```
