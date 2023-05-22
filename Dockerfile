@@ -10,12 +10,14 @@ RUN mkdir frontend
 COPY package*.json ./
 COPY frontend/package*.json ./frontend/
 
-## Install backend and frontend
+## Install backend dependencies
 RUN npm install
-RUN npm run heroku-postbuild
+## Install frontend dependencies
+RUN npm run install-frontend
 
 # Bundle app source
 COPY . .
+RUN npm run bundle-frontend
 
 EXPOSE 8080
 CMD [ "node", "backend/index.js" ]
