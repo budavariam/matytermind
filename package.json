@@ -13,7 +13,7 @@
     "install-frontend": "cd frontend && npm install",
     "bundle-frontend": "cd frontend && npm run build && rm -rf ./node_modules/",
     "build-frontend": "cd frontend && npm install && npm run build",
-    "build-gh": "cd frontend && npm install && npm run build-gh",
+    "build-serverless": "cd frontend && npm install && npm run build-serverless",
     "heroku-postbuild": "cd frontend && npm install && npm run build && rm -rf ./node_modules/"
   },
   "dependencies": {

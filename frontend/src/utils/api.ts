@@ -7,7 +7,7 @@ type GameGuess = {
 }
 
 type GameState = {
-    "local": {
+    "serverless": {
         guesses: GameGuess[],
         secret: number[],
         isOver: boolean,
@@ -15,7 +15,7 @@ type GameState = {
 }
 
 const games: GameState = {
-    "local": {
+    "serverless": {
         secret: [-1, -1, -1, -1],
         guesses: [],
         isOver: false,
@@ -29,7 +29,7 @@ const gameSettings: GameSettings = {
 }
 
 function start() {
-    const id = "local"
+    const id = "serverless"
     games[id] = {
         secret: generateSequence(gameSettings),
         guesses: [],
@@ -45,7 +45,7 @@ function start() {
 
 
 function guess(guess: number[]) {
-    const id = "local"
+    const id = "serverless"
     if (!guess.length || guess.some((gue) => !isFinite(gue) || isNaN(gue) || gue > gameSettings.colours || gue < 0)) {
         throw new Error("Invalid parameters")
     }

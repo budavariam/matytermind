@@ -19,7 +19,7 @@ services:
       context: ./frontend
     container_name: frontend_local
     environment:
-      - REACT_APP_LOCAL_GAME=true
+      - REACT_APP_SERVERLESS_GAME=true
     volumes:
       - ./frontend/src:/usr/src/app/src
     ports:

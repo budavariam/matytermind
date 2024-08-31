@@ -22,7 +22,7 @@ type GameStateAction = (
     | { type: "SUBMITING", submitInProgress: boolean }
     | { type: "NEXT_STEP", playerWon: boolean, lines: LineType[], solution: SolutionType, error?: ErrorType });
 
-const NEED_SERVER = !process.env.REACT_APP_LOCAL_GAME || false
+const NEED_SERVER = !(process.env.REACT_APP_SERVERLESS_GAME) || false
 
 const Game: React.FC<{}> = () => {
     const context = useContext(GameContext)
