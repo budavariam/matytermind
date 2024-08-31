@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/matytermind/static/css/main.bbbfb8a2.chunk.css",
+    "main.js": "/matytermind/static/js/main.d4fcba0d.chunk.js",
+    "main.js.map": "/matytermind/static/js/main.d4fcba0d.chunk.js.map",
+    "runtime-main.js": "/matytermind/static/js/runtime-main.1c1cd1b8.js",
+    "runtime-main.js.map": "/matytermind/static/js/runtime-main.1c1cd1b8.js.map",
+    "static/js/2.e332c94c.chunk.js": "/matytermind/static/js/2.e332c94c.chunk.js",
+    "static/js/2.e332c94c.chunk.js.map": "/matytermind/static/js/2.e332c94c.chunk.js.map",
+    "index.html": "/matytermind/index.html",
+    "precache-manifest.276f24d1a288033566926b8965d9fc14.js": "/matytermind/precache-manifest.276f24d1a288033566926b8965d9fc14.js",
+    "service-worker.js": "/matytermind/service-worker.js",
+    "static/css/main.bbbfb8a2.chunk.css.map": "/matytermind/static/css/main.bbbfb8a2.chunk.css.map",
+    "static/js/2.e332c94c.chunk.js.LICENSE.txt": "/matytermind/static/js/2.e332c94c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1c1cd1b8.js",
+    "static/js/2.e332c94c.chunk.js",
+    "static/css/main.bbbfb8a2.chunk.css",
+    "static/js/main.d4fcba0d.chunk.js"
+  ]
+}
