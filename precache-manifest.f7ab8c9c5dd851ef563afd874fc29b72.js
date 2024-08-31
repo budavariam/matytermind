@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "45afe3ea69825e936410007847b6877d",
+    "revision": "a59f73b3598317cf9814013919605005",
     "url": "/matytermind/index.html"
   },
   {
-    "revision": "b69069f755127f21f4d4",
+    "revision": "0c29980591a2125a2752",
     "url": "/matytermind/static/css/main.bbbfb8a2.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/matytermind/static/js/2.e332c94c.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "b69069f755127f21f4d4",
-    "url": "/matytermind/static/js/main.d4fcba0d.chunk.js"
+    "revision": "0c29980591a2125a2752",
+    "url": "/matytermind/static/js/main.f9647b95.chunk.js"
   },
   {
     "revision": "e4752c3efeb71a99bf10",

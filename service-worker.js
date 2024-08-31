@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/matytermind/precache-manifest.276f24d1a288033566926b8965d9fc14.js"
+  "/matytermind/precache-manifest.f7ab8c9c5dd851ef563afd874fc29b72.js"
 );
 
 self.addEventListener('message', (event) => {
