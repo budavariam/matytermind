@@ -7,7 +7,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <GameContext.Provider value={defaultGameContext}>
-        <Game></Game>
+        <Game />
       </GameContext.Provider>
     </div>
   );

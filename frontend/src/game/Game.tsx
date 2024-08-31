@@ -5,6 +5,7 @@ import "./game.scss";
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { PlayArea } from './PlayArea';
+import { guess, start } from '../utils/api';
 
 type GameState = {
     error: ErrorType,
@@ -20,6 +21,8 @@ type GameStateAction = (
     | { type: "ERROR", }
     | { type: "SUBMITING", submitInProgress: boolean }
     | { type: "NEXT_STEP", playerWon: boolean, lines: LineType[], solution: SolutionType, error?: ErrorType });
+
+const NEED_SERVER = !process.env.REACT_APP_LOCAL_GAME || false
 
 const Game: React.FC<{}> = () => {
     const context = useContext(GameContext)
@@ -48,8 +51,9 @@ const Game: React.FC<{}> = () => {
 
 
     useEffect(() => {
-        fetch("/api/start")
-            .then(res => res.json())
+        const startFn = (NEED_SERVER) ? fetch("/api/start").then(res => res.json()) : start()
+        
+        startFn
             .then(
                 (result) => {
                     context.setId(result.id)
@@ -102,16 +106,16 @@ const Game: React.FC<{}> = () => {
                 type: "SUBMITING",
                 submitInProgress: true,
             })
-            fetch('/api/guess', {
+            const guessBody = { id: context.id, guess: context.actualGuess }
+            const guessFn = (NEED_SERVER) ? fetch('/api/guess', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: context.id, guess: context.actualGuess })
-            })
-                .then(res => res.json())
-                .then(
+                body: JSON.stringify(guessBody)
+            }).then(res => res.json()) : guess(guessBody.guess)
+            guessFn.then(
                     (result: GameResponse) => {
                         if (result.message) {
                             setState({
@@ -129,7 +133,7 @@ const Game: React.FC<{}> = () => {
                             });
                         }
                     },
-                    (error) => {
+                    (error: Error) => {
                         console.error(error)
                         setState({
                             type: "LOADED",

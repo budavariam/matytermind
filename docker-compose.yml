@@ -1,0 +1,27 @@
+# myApp/docker-compose.yaml
+version: "3.8"
+services:
+  # frontend:
+  #   build: ./frontend
+  #   container_name: frontend_c
+  #   ports:
+  #     - "3000:3000"
+  # backend:
+  #   build: ./backend
+  #   container_name: backend_c
+  #   ports:
+  #     - "8080:8080"
+  #   stdin_open: true
+  #   tty: true
+  frontend_local:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./frontend
+    container_name: frontend_local
+    environment:
+      - REACT_APP_LOCAL_GAME=true
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+    ports:
+      - "3000:3000"
+    stdin_open: true
